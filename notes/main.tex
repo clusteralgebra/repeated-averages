@@ -1,0 +1,96 @@
+\documentclass[12pt]{article}
+\usepackage{../style}
+\usepackage[margin=0.75in]{geometry}
+\title{Junior Seminar Notes}
+\author{Alan Yan \\ Project Advisor: Professor Allan Sly}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newpage 
+
+\section{The Initial Conditions}
+
+We first describe the initial markov chain. 
+\begin{defn}[Markov Chain I]
+	We have a Markov chain $x_0, x_1, \ldots$ where $x_0$ is some initial vector in $\RR^n$. Notation-wise, let $x_k = (x_{k, 1}, \ldots, x_{k,n})$. The Markov chain progresses as follows: given $x_k$ pick two distinct coordinates $I$ and $J$ uniformly at random, and replace $x_{k, I}$ and $x_{k, J}$ by their average $\frac{x_{k, I} + x_{k, J}}{2}$.
+\end{defn}
+We have a Markov chain $x_0, x_1, \ldots$ where $x_0$ is some initial vector in $\RR^n$. Notation-wise, let $x_k = (x_{k, 1}, \ldots, x_{k,n})$. The Markov chain progresses as follows: given $x_k$ pick two distinct coordinates $I$ and $J$ uniformly at random, and replace $x_{k, I}$ and $x_{k, J}$ by their average $\frac{x_{k, I} + x_{k, J}}{2}$. We want to study the rate of convergence of this Markov chain to its average $(\ol{x}_0, \ldots, \ol{x}_0)$ where
+\[
+	\bar{x_0} = \frac{x_{0, 1} + \ldots + x_{0, n}}{n}.	
+\]
+We have two ways to measure the distance from the average: 
+\begin{align*}
+	T(k) & = \sum_{i = 1}^n |x_{k, i} - \ol{x}_0| \\
+	S(k) & = \sum_{i = 1}^n |x_{k, i} - \ol{x}_0|^2.
+\end{align*}
+
+We have an exact formula for the expected $L^2$ norm. Without loss of generality, we can assume $\bar{x_0} = 0$. 
+
+\begin{prop}[Proposition 2.1 in the paper]
+	For any $k \geq 0$, we have 
+	\[
+		\EE (S(k+1) | \mcF_k) = \left ( 1 - \frac{1}{n-1} \right ) S(k).
+	\]	
+\end{prop}
+\begin{proof}
+	The calculation is done in the paper. 
+\end{proof}
+
+To avoid issues of dependence in the discrete time setting, we approximate Markov chain I with the following continuous time Markov chain. 
+
+\begin{defn}[Markov Chain II]
+	We have a Markov chain $\{x_t\}_{t \geq 0}$. Give each pair of coordinates an independent Poisson clock with rate $\binom{n}{2}^{-1}$. When a clock rings, replace the corresponding pair of coordinates with their average. 
+\end{defn}
+
+With this new Markov chain, we introduce the same measurements from the average. 
+
+\begin{align*}
+	T'(k) & := \sum_{i = 1}^n \abs{x_{t, i} - \ol{x}_0} \\
+	S'(k) & := \sum_{i = 1}^n \abs{x_{t, i} - \ol{x}_0}^2.
+\end{align*}
+
+We get a similar formula for the expected $L^2$ distance. 
+
+\begin{prop}
+	For any $t \geq s \geq 0$, we have that 
+	\[
+		\EE[S'(t) | \mcF_s ] = \exp \left ( - \frac{t-s}{n-1} \right ) S'(s).	
+	\]
+\end{prop}
+\begin{proof}
+	Let $E_k$ be the event that there are $k$ rings between times $s$ and $t$. Then 
+	\begin{align*}
+		\EE [ S'(t) | \mcF_s ] & = \sum_{k = 0}^\infty \EE \bparens{S'(t) | \mcF_s \text{ and $k$ rings}} \cdot \Pr[E_k] \\
+		& = \sum_{k = 0}^\infty \parens{1 - \frac{1}{n-1}}^k S'(s) \cdot e^{-(t-s)} \cdot \frac{(t-s)^k}{k!} \\
+		& = \exp \parens{ (t-s) \parens{1 - \frac{1}{n-1}}} \cdot e^{-(t-s)} S'(s) \\
+		& = \exp \parens{- \frac{t-s}{n-1}} \cdot S'(s). 
+	\end{align*}
+	This suffices for the proof. 
+\end{proof}
+
+From here on out, we study the process starting from $x_0 = (1 - 1/n, -1/n, \ldots, -1/n)$. The main theorem that the paper proves is the following. 
+
+\begin{thm}[Theorem 2.3 in the paper] \label{main_theorem_continuous}
+	Take $\Phi : \RR \to [0, 1]$ as the cdf of the standard normal distribution. For any $a \in \RR$, we have $T'(n (\log_2(n) +a \sqrt{\log_2(n)})/2) \pconverge 2 \Phi(-a)$ in probability as $n \to \infty$. 
+\end{thm}
+
+In the discrete case, we have the following theorem. 
+
+\begin{thm}[Theorem 1.2 in the paper] \label{main_theorem_discrete}
+	For any $a \in \RR$, we have that 
+	\[
+		T (\lfloor{n (\log_2 (n) + a \sqrt{\log_2(n)})/2}) \pconverge 2 \Phi(-a).
+	\]
+\end{thm}
+
+\begin{prop}
+	Theorem~\ref{main_theorem_continuous} and Theorem~\ref{main_theorem_discrete} are equivalent. 
+\end{prop}
+\begin{proof}
+	TODO
+\end{proof}
+\end{document}
+
+
