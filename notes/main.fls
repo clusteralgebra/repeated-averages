@@ -946,9 +946,6 @@ INPUT .\main.toc
 INPUT main.toc
 INPUT main.toc
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
-OUTPUT main.toc
-INPUT C:\Users\alany\AppData\Local\MiKTeX\2.9\fonts\map\pdftex\pdftex.map
-INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmti12.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr6.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi12.tfm
@@ -966,9 +963,27 @@ INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+OUTPUT main.toc
+INPUT C:\Users\alany\AppData\Local\MiKTeX\2.9\fonts\map\pdftex\pdftex.map
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmti12.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam5.tfm
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmss12.tfm
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmss8.tfm
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmss8.tfm
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\tex\latex\doublestroke\udsrom.fd
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\tex\latex\doublestroke\udsrom.fd
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\tex\latex\doublestroke\udsrom.fd
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\tex\latex\doublestroke\udsrom.fd
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\doublestroke\dsrom12.tfm
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\doublestroke\dsrom8.tfm
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\doublestroke\dsrom8.tfm
+INPUT .\main.bbl
+INPUT main.bbl
+INPUT .\main.bbl
+INPUT main.bbl
 INPUT main.aux
 INPUT .\main.out
 INPUT .\main.out
@@ -986,13 +1001,21 @@ INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfon
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr17.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr17.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr6.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr6.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr8.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr8.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmss12.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmss12.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy6.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy6.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy8.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy8.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti12.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti12.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\doublestroke\dsrom12.pfb
+INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\doublestroke\dsrom12.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\symbols\msbm10.pfb
 INPUT C:\Users\alany\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\symbols\msbm10.pfb

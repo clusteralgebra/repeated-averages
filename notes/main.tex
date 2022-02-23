@@ -78,7 +78,7 @@ From here on out, we study the process starting from $x_0 = (1 - 1/n, -1/n, \ldo
 
 In the discrete case, we have the following theorem. 
 
-\begin{thm}[Theorem 1.2 in the paper] \label{main_theorem_discrete}
+\begin{thm}[Theorem 1.2 \cite{chatterjee2021phase}] \label{main_theorem_discrete}
 	For any $a \in \RR$, we have that 
 	\[
 		T (\lfloor{n (\log_2 (n) + a \sqrt{\log_2(n)})/2}) \pconverge 2 \Phi(-a).
@@ -91,6 +91,86 @@ In the discrete case, we have the following theorem.
 \begin{proof}
 	TODO
 \end{proof}
+\newpage
+
+\subsection{Generalized Averages}
+
+\begin{defn}
+	Let $\msM_m^n$ be the markov chain $\{x_k\}_{k \geq 0} \subset \RR^n$ where $x_0$ is some initial vector in $\RR^n$ and $x_{k+1}$ is obtained from $x_k$ by uniformly picking $m$ distinct coordinates at random and replacing them by their average. Let $\PP \msM_m^n = \{x_t\}_{t \in \RR_{\geq 0}}$ be the Poissonized version of the process where we assign independent clocks of rate $\binom{n}{m}^{-1}$ to every $m$-subset of coordinates. Whenever a clock rings, we replace the corresponding coordinates by their average. 
+\end{defn}
+
+We want to study the rate of convergence of this Markov chain to its average $(\ol{x}_0, \ldots, \ol{x}_0)$ where 
+\[
+	\ol{x}_0 := \frac{\langle x_0, \1 \rangle}{n}.	
+\]
+\begin{remark}
+	Without loss of genearlity, $\ol{x}_0 = 0$ and in general the slowest rates of convergence seem to take place when all of the weight is concentrated on a single coordinate vector. Thus, we could consider initial vectors 
+	\[
+		x_0 = \left ( 1 - \frac{1}{n}, - \frac{1}{n}, \ldots, - \frac{1}{n} \right ).
+	\]	
+\end{remark}
+We have two ways to measure the distance from the average:
+\begin{align*}
+	T(k) & := \norm{x_k - x_0}_{L^1} \\
+	S(k) & := \norm{x_k - x_0}_{L^2}.
+\end{align*}
+
+\begin{prop}
+	Let $\{x_k\}_{k \geq 0} = \msM_m^n$. For any $k \geq 0$, we have 
+	\[
+		\EE \left [ S(k+1) | \mcF_k \right ] = \left ( 1 - \frac{m-1}{n-1} \right ) S(k).	
+	\]
+\end{prop}
+
+\begin{proof}
+	We have 
+	\begin{align*}
+		\EE \left [ S(k+1) | \mcF_k \right ] & = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S(k) - \sum_{j = 1}^m x_{k, i_j}^2 + m \left ( \frac{x_{k, i_1} + \ldots + x_{k, i_m}}{m} \right )^2 \right \} \\
+		& = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S(k) - \sum_{j = 1}^m x_{k, i_j}^2  + \frac{1}{m} \sum_{j = 1}^m x_{k, i_j}^2 + \frac{1}{m} \sum_{1 \leq u < v \leq m} x_{k, i_u} x_{k, i_v} \right \} \\
+		& = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S(k) + \frac{1-m}{m} \sum_{j = 1}^m x_{k, i_j}^2 + \frac{1}{m} \sum_{1 \leq u < v \leq m} x_{k, i_u} x_{k, i_v} \right \} \\
+		& = S_1 + S_2 + S_3
+	\end{align*}
+	where 
+	\begin{align*}
+		S_1 & := \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} S(k) \\
+		S_2 & := \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1-m}{m} \sum_{j = 1}^m x_{k, i_j}^2 \\
+		S_3 & = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1}{m} \sum_{1 \leq u < v \leq m} 2x_{k, i_u} x_{k, i_v}.
+	\end{align*}
+	For the first sum, we immediately get $S_1 = S(k)$. For the second sum, we get 
+	\begin{align*}
+		S_2 & = \binom{n}{m}^{-1} \cdot \frac{1-m}{m} \cdot \binom{n-1}{m-1} S(k) = \frac{1-m}{n} S(k). 
+	\end{align*}
+	For the last sum, we get 
+	\[
+		S_3 = \binom{n}{m}^{-1} \cdot \frac{1}{m} \cdot \binom{n-2}{m-2} \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = \frac{1-m}{n(n-1)} S(k)
+	\]
+	where we used the fact that 
+	\[
+		S(k) + \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = (x_{k, 1} + \ldots + x_{k, n})^2 = 0.	
+	\]
+	Then 
+	\[
+		\EE [S(k+1) | \mcF_k] = \left ( 1 + \frac{1-m}{n} + \frac{1-m}{n(n-1)} \right ) S(k) = \left ( 1 - \frac{m-1}{n-1} \right ) S(k).	
+	\]
+\end{proof}
+
+\begin{cor}
+	Let $\{x_t\}_{t \in \RR_{\geq 0}} = \PP \msM_m^n$. For $0 \leq s < t$, we have 
+	\[
+		\EE [S^*(t) | \mcF_s] = \exp \left ( \frac{(t-s)(m-1)}{n-1} \right ) S^*(s).	
+	\]
+\end{cor}
+\begin{proof}
+	We have 
+	\begin{align*}
+		\EE [ S^*(t) | \mcF_s ] & = \sum_{k = 0}^\infty \Pr[k \text{ rings}] \cdot \EE \left [ S^*(t) | \mcF_s \text{ and } k \text{ rings} \right ] \\
+		& = \sum_{k = 0}^\infty \frac{(t-s)^k}{k!} \cdot e^{-(t-s)} \cdot \left ( 1 - \frac{m-1}{n-1} \right )^k S^*(s) \\
+		& = \exp \left ( \frac{(t-s)(m-1)}{n-1} \right ) S^*(s). 
+	\end{align*}
+\end{proof}
+\newpage 
+\bibliographystyle{plain}
+\bibliography{ref}
 \end{document}
 
 
