@@ -198,16 +198,77 @@ For $x \in [0, 1]$, let $I_t^x$ be the interval of the point $x$ at time $t$. Co
 \[
 	\log |I_t^x| = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \text{Poiss} \left (q_k \cdot \frac{k}{n}\right ).
 \]
-Thus, the distribution of $\log |I_t^x|$ for fixed $x$ is well understood. Now note that 
+Thus, the distribution of $\log |I_t^x|$ for fixed $x$ is well understood. We are interested in the random variable 
 \[
-	\sum_{I \in I_{t(n)}} \mu(I) \cdot \1_{a_n < \mu(I) < b_n}
+	X = \sum_{I \in I_{t(n)}} \mu(I) \cdot \1_{a_n < \mu(I) < b_n}.
 \] 
-is the probability that if we pick a random point uniformly from $[0, 1]$, the point will lie in an interval of length between $a_n$ and $b_n$. 
+The expected value of $X$ can be computed by exploiting the symmetry of the interval:
+\[
+	\EE[X] = \EE \int_0^1 \1_{|I_{t(n)}^x| \in (a_n, b_n)} \, dx = 	\int_0^1 \Pr[|I_{t(n)}^x| \in (a_n, b_n)] dx = \Pr[|I_{t(n)}^x| \in (a_n, b_n)]
+\]
+from Fubini's Theorem. To have any hope in producing the bound (???), we need to understand the probability $\Pr[|I_{t(n)}^x| \in (a_n, b_n)]$. Note that 
 \begin{align*}
-	\Pr \left ( \sum_{I \in I_{t(n)}} \mu(I) \cdot \1_{a_n < \mu(I) < b_n}  \geq 1 - o(1) \right ) & = \Pr \left ( \Pr (a_n < \mu (I_t^x) < b_n) \geq 1 - o(1) \right ) \\
-	& = 
+	\Pr[|I_{t(n)}^x| \in (a_n, b_n)] = \Pr[\log |I_{t(n)}^x| \in (\log a_n, \log b_n)].
 \end{align*}
+\subsection{Logarithmic Length of the Interval Trajectory}
+Recall that for any fixed $t > 0$, we have that 
+\[
+	\log |I_t^x| = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \mathsf{Poisson} \left (\frac{q_k k}{n} \cdot t \right ).
+\]
 
+\begin{lem}
+	Suppose $X_t \sim \mathsf{Poisson}(t)$ for all $t$. Then 
+	\[
+		\frac{X_t - t}{\sqrt{t}} \xrightarrow{d} N(0, 1)	
+	\]
+	where the convergence is in distribution.
+\end{lem}
+\begin{proof}
+	Let $Y_n$ for $n \geq 1$ be iid Poisson random variables of rate $1$ and let $Z_t$ be a Poisson random variable of rate $\{t\}$. Then $X_t$ has the same distribution as 
+	\[
+		X_t \sim \sum_{i = 1}^{[t]} Y_i + Z_t.	
+	\]
+	Thus, we have that 
+	\begin{align*}
+		\frac{X_t - t}{\sqrt{t}} & = \frac{\sum_{i = 1}^{[t]} Y_i + Z_t-t}{\sqrt{t}} \\
+		& = \frac{\sqrt{[t]}}{\sqrt{t}} \cdot \frac{\sum_{i = 1}^{[t]} Y_i - [t]}{\sqrt{[t]}} + \frac{Z_t - \{t\}}{\sqrt{t}}.
+	\end{align*}
+	Since $(Z_t - \{t\})/\sqrt{t} \to 0$ almost surely, the Lemma follows from the central limit theorem. 
+\end{proof}
+We can rewrite 
+\begin{align*}
+	\log |I_t^x| & = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \left ( P_k - \frac{q_k k}{n} \cdot t \right ) + \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \frac{q_k k}{n} \cdot t	\\
+	& = \sqrt{\frac{t}{n}} \cdot \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \sqrt{q_k k} \cdot \left ( \frac{P_k - \frac{q_k k}{n} \cdot t}{\sqrt{\frac{q_k k}{n} t}} \right ) - \frac{t}{n} \EE[Q \log Q].
+\end{align*}
+Rearranging, we get that 
+\[
+	\frac{\log |I_t^x| + \frac{t}{n} \EE[Q \log Q]}{\sqrt{t/n}} = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \sqrt{q_k k} \cdot	\left ( \frac{P_k - \frac{q_k k}{n} \cdot t}{\sqrt{\frac{q_k k}{n} t}} \right ).
+\]
+From the Lemma, this gives 
+\[
+	\frac{\log |I_t^x| + \frac{t}{n} \EE[Q \log Q]}{\sqrt{t/n}} \to N \left (0, \sum_{k = 2}^N \log(k)^2 k q_k \right ) = N \left (0, \EE[Q (\log Q)^2] \right )
+\]
+in distribution. Define the constants
+\begin{align*}
+	A_n & = \sqrt{\frac{n}{t}} \cdot \left ( \log a_n + \frac{t}{n} \EE[Q \log Q] \right ) \\
+	B_n & = \sqrt{\frac{n}{t}} \cdot \left ( \log b_n + \frac{t}{n} \EE[Q \log Q] \right ).
+\end{align*}
+Suppose $a_n = n^{-1 + a(n)}$ and $b_n = n^{-1 + b(n)}$. 
+
+\subsection{Trying Random Stuff}
+
+Let's say $t := t_n = \gamma n (\log n - h(n))$ where $\gamma = \EE[Q \log Q]^{-1}$ and $h(n) = o(\log n)$. Then we have 
+\begin{align*}
+	A_n & := \sqrt{\frac{1}{\gamma (\log n - h(n))}} \cdot \left ( (-1 + a(n)) \log n + n(\log n - h(n)) \right ) \\
+	& = \frac{\log n}{\sqrt{\gamma (\log n - h(n)) }} \cdot \left ( a(n) - \frac{h(n)}{\log n} \right ) \\
+	B_n & := \frac{\log n}{\sqrt{\gamma (\log n - h(n)) }} \cdot \left ( b(n) - \frac{h(n)}{\log n} \right )
+\end{align*}
+Then we can let, 
+\begin{align*}
+	a(n) & = \frac{h(n)}{2 \log n} \\
+	b(n) & = \frac{2h(n)}{\log n}
+\end{align*}
+for example to ensure $A_n \to - \infty$ and $B_n \to \infty$. This gives us $\Pr[|I_t^x| \in (a_n, b_n)] \to 1$.
 \newpage 
 \bibliographystyle{plain}
 \bibliography{ref}
