@@ -328,15 +328,19 @@ At any given point, there are at most $1/a_n$ intervals.
 
 \section{Starting Anew}
 
-\begin{defn}
+\begin{defn} [Original Process]
 	Let $\{x_t\}$ be the Markov chain where $x_0 = (1, 0, \ldots, 0) \in \RR^n$. We have a Poisson clock of rate $1$. Everytime this clock rings, we pick $Q$ random coordinates to average. 
 \end{defn}
 
-\begin{defn}
+\begin{defn} [Fragmentation Process]
 	Let $\{\overline{x}_t\}$ be the Markov chain where $\overline{x}_0 = (1, 0 \ldots, 0) \in \RR^n$. It evolves in the same way as $\{x_t\}$ except when we average at least two positive coordinates, we throw away all of the coordinates. Moreover, when intervals become smaller than $a_n$, we also throw them away. This is a fragmentation process version of the original process where we throw out piles which become too small. 
 \end{defn}
 
-We couple the processes $\{x_t\}$ and $\{\overline{x}_t\}$ such that the same averagings happen to both of them. To the fragmentation process, there is an interval interpretation. For $x \in [0, 1]$, consider $I_t^x$, the interval containing $x$. From now on, let $t := \gamma n ( \log n - (\log n)^{3/4})$. Define 
+\begin{defn} [Branching Process]
+	Let $I_t$ be a Markov chain where $I_0 = [0, 1]$. Each $I_t$ will consist of a collection of intervals which partition $[0, 1]$. To each interval of $I_t$, we attach a clock of rate $\mu / n$ and when it rings we split that interval up into a random number of equal parts according to the law of $Q'$ with distibution $(2q_2 / \mu, \ldots, Nq_N /\mu)$.
+\end{defn}
+
+(describe the coupling?) there are floating labels on the intervals, and when an averaging happens, the labels change. The is the valid coupling. We can couple $I_t$ and $\overline{x}_t$ in a way such that at time $t$, when $\overline{x}_{t, i} \neq 0$, there exists some $\pi_t(i)$ such that $\overline{x}_{t, i} = |I_{\pi_t(i)}|$ where $I_{\pi_t(i)} \in I_t$ and when $i \neq j$ we have $\pi_t(i) \neq \pi_t(j)$. We couple the processes $\{x_t\}$ and $\{\overline{x}_t\}$ such that the same averagings happen to both of them. To the fragmentation process, there is an interval interpretation. For $x \in [0, 1]$, consider $I_t^x$, the interval containing $x$. From now on, let $t := \gamma n ( \log n - (\log n)^{3/4})$. Define 
 \begin{align*}
 	a_n & = n^{-1 + a(n)} \\
 	b_n & = n^{-1 + b(n)} \\
@@ -344,41 +348,152 @@ We couple the processes $\{x_t\}$ and $\{\overline{x}_t\}$ such that the same av
 	b(n) & = 2 (\log n)^{-1/4}.
 \end{align*}
 
+Let $t := \gamma n (\log n - (\log n)^{3/4})$. 
 \begin{lem}
-	$\Pr[I_t^x \textit{ gets averaged with a positive pile}] \to 0$ uniformly for all $x$. 
+	$\norm{x_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ almost surely. 
 \end{lem}
+
 \begin{proof}
-	We want to lower bound the probability that $I_t^x$ does not get averaged with a positive pile. Note that there are at most $1/a_n$ positive piles at a time. The worst possible case is if there are $1/a_n$ positive piles and $N$ terms are being averaged at every moment. Thus, the probability that $I_t^x$ does not get averaged with a positive pile is at least the probability that a Poisson process of rate $- \binom{1/a_n}{N-1} \binom{n}{N}^{-1}t$ is $0$. This gives the bounded
+	Clearly $x_{t, i} > \overline{x}_{t, i}$ for all coordinates $1 \leq i \leq n$ because $\overline{x}_{t}$ is the same process as $x_t$ except we throw out piles when they become too small or throw them out when we average at least two positive piles. The statement $\norm{x_t - \overline{x}_t}_1 \to 0$ then states that the amount we throw out in the process $\overline{x}_t$ is $o(1)$. The only way we throw out things is if we average at least two positive piles or we split up a pile into piles which are too small. In the latter case, the process $I_t$ is the process $\overline{x}_t$ if we condition on the event that we never average two positive piles and we don't throw away the small piles. Hence the total length of the intervals in $I_t$ that are smaller than $a_n$ will be greater than the amount of intervals we throw away in $\overline{x}_t$ due to being too small. By Lemma (???), this length is $o(1)$ almost surely. Thus, it suffices to prove that the total length removed by averaging at least two positive piles is $o(1)$. Let $D_t$ be the total length removed by averaging at least two positive intervals at time $t$. By linearity of expectation, we have that 
+	\[
+		\EE [ D_{t + \Delta} - D_t | \text{ one ring } ] = \EE \sum_i \overline{x}_{t, i} \cdot p_{i}. 
+	\]
+	where $p_{ij}$ is the probability we pick $i$ and some $j$ such that $\overline{x}_{t, j} \neq 0$. We can bound $p_i$ by above by coupling with the process where at each averaging we pick $N$ positions to average since this will increase the probability that we average $\overline{x}_{t, i}$ with a positive entry. There are at most $1/a_n$ positive piles. The probability that we pick $\overline{x}_{t, i}$ in an avering is then $N / n$. The probability that we pick $\overline{x}_{t, i}$ and no other positive pile is at least $\frac{\binom{n - 1/a_n}{N-1}}{\binom{n}{N}}$. Thus, we have that
 	\begin{align*}
-		\Pr[I_t^x \text{ gets averaged with a positive pile}] & \leq 1 - \exp \left ( - \binom{1/a_n}{N-1} \binom{n}{N}^{-1} t \right ) \\
-		& \leq \binom{1/a_n}{N-1} \binom{n}{N}^{-1} t \\
-		& \ll n^{(N-1)(1-a(n))} \cdot n^{-N} \cdot n \log n \\
-		& = n^{-(N-1)a(n)} \log n \to 0. 
+		p_i \leq \frac{N}{n} - \frac{\binom{n-1/a_n}{N-1}}{\binom{n}{N}} & \leq \frac{N}{n} - N \cdot \frac{(n-1/a_n)^{N-1}}{(n-N+1)^N} \\
+		& \leq N \left ( \frac{(n-N+1)^N - n(n-1/a_n)^{N-1}}{n(n-N+1)^N} \right ) \\
+		& \leq \frac{N}{(n-N+1)^{N+1}} \cdot (1/a_n - N + 1) \cdot (n-N+1)^{N-1}
 	\end{align*}
-	This suffices for the proof. 
+	where the last inequality follows from the mean value theorem. Thus, we have
+	\[
+		p_i \leq \frac{N}{a_n (n-N+1)^2} \leq \frac{C}{a_n n^2}.
+	\]
+	for some universal constant $C$ depending on $N$. This gives us 
+	\[
+		\EE [D_{t + \Delta} - D_t | \text{ one ring }] \leq \frac{C}{a_n n^2} \cdot \EE \sum_i \overline{x}_{t, i} \leq \frac{C}{a_n n^2}.
+	\]
+	Between $0$ and $t$, we are expected to have $t$ rings. Hence, we have 
+	\[
+		\EE [D_t] \leq \frac{C \gamma n \log n}{a_n n^2} = O \left ( \frac{\log n}{a_n n} \right ) = O \left ( \log n \cdot n^{- (\log n)^{-1/4}} \right ) = o(1). 
+	\]
+	Thus $D_t \to 0$ almost surely and $\norm{x_t - \overline{x_t}} = D_t + o(1) \to 0$ almost surely. This proves the lemma. 
 \end{proof}
 
-This implies that we can assume that no two non-zero piles get averaged. This allows us to consider the branching process as before and get that 
-\[
-	\EE \left [ \sum_{I \in I_t} \mu(I) \cdot \1_{a_n < \mu(I) < b_n} \right ] \to 1. 	
-\]
-We should (from the previous) (why?) have that 
-\[
-	\left | \sum_{I \in I_t} \mu(I) \cdot \1_{a_n < \mu(I) < b_n} - \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{a_n < \overline{x}_{t, i} < b_n} \right | \to 0
-\]
-which also implies that 
-\[
-	\EE \left [ \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{a_n < \overline{x}_{t, i} < b_n} \right ] \to 1.
-\]
-Then, we have 
-\begin{align*}
-	T(t) & = 2 \sum_{i = 1}^n \left ( x'_{t, i} - \frac{1}{n} \right )^+ \\
-	& \geq 2 \sum_{i = 1}^n \left ( \bar{x}_{t, i} - \frac{1}{n} \right )^+ \\
-	& \geq 2 \sum_{i = 1}^n \bar{x}_{t, i} \cdot \1_{a_n < \overline{x}_{t, i} < b_n} - \frac{2}{n} \# \{i : \bar{x}_{t, i} > a_n \} \\
-	& \geq 2 \sum_{i = 1}^n \bar{x}_{t, i} \cdot \1_{a_n < \overline{x}_{t, i} < b_n} - \frac{2}{na_n}.
-\end{align*}
-You can check $\frac{2}{na_n} = o(1)$. Thus, we have that $T(t) \to 2$ almost surely. 
+\begin{lem}
+	We have that
+	\[
+		\left | \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} - \sum_{I \in I_t} |I| \cdot \1_{I \in (a_n, b_n)} \right | \to 0. 
+	\]
+	almost surely. 
+\end{lem}	
+\begin{proof}
+	For the piles $\overline{x}_{t, i} \neq 0$, there is an injection into $I_t$ into intervals of equal length. The other intervals correspond to $\overline{x}_{t, i} = 0$ intervals, but these intervals have been averaged with positive piles. But the total length of these intervals is dominated by $\norm{x_t - \overline{x}_t}_1$ which we proved to be $o(1)$. Hence, we have that
+	\[
+		\left | \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} - \sum_{t \in I_t} |I| \cdot \1_{I \in (a_n, b_n)} \right | \leq \norm{x_t - \bar{x}_t}_1 = o(1). 
+	\]
+	This proves the lemma. 
+\end{proof}
 
+\begin{prop}
+	$T(t) \to 2$ almost surely as $n \to \infty$. 
+\end{prop}
+\begin{proof}
+	We can write
+	\[
+		T(t) = 2 \sum_{i = 1}^n \left ( x_{t, i} - \frac{1}{n} \right )^+ \geq 2 \sum_{i = 1}^n \left ( \overline{x}_{t, i} - \frac{1}{n} \right )^+
+	\]
+	since $x_t$ is greater than $\overline{x}_t$ coordinate-wise. We can simplify the expression on the right hand side as
+	\begin{align*}
+		2 \sum_{i = 1}^n \left ( \overline{x}_{t, i} - \frac{1}{n} \right )^+ & \geq 2 \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{x_{t, i} \in (a_n, b_n)} - \frac{2}{n} | \{ i \in [n] : \overline{x_{t, i}} > 0\} \\
+		& \geq 2 \sum_{I \in I_t}^n |I| \cdot \1_{I \in (a_n, b_n)} - \frac{2}{n a_n} + o(1) \\
+		& \geq 2 - o(1).
+	\end{align*}
+	This proves the proposition. 
+\end{proof}
+
+\begin{defn}
+	Consider the process $\widehat{x}$ starting at time $t$ with initial condition
+	\[
+		\widehat{x}_{t, i} = \overline{x}_{t, i} \cdot \1_{x_{t, i} \in (a_n, b_n)} + \frac{1}{n} \left ( 1 - \sum_{i \in \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \right ).
+	\]
+	In particular, we have that $\norm{\widehat{x}_t} = 1$. Let $\widehat{x}$ evolve according to the same averages as $x$. 
+\end{defn}
+
+\begin{lem}
+	$\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ almost surely. 
+\end{lem}
+\begin{proof}
+	When $\overline{x}_{t, i} \in (a_n, b_n)$, then we have that
+	\[
+		|\overline{x}_{t, i} - \widehat{x}_{t, i}| = \frac{1 - z}{n}
+	\]
+	where $z := \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \to 1$ almost surely as $n \to \infty$. When $\overline{x}_{t, i} \not\in (a_n, b_n)$, the n
+	\[
+		| \overline{x}_{t,i} - \widehat{x}_{t, i}| \leq \overline{x}_{t, i} + \frac{1-z}{n}.
+	\]
+	Thus, we have that
+	\[
+		\norm{\widehat{x}_t - \overline{x}_t}_1 \leq n \cdot \frac{1-z}{n} + \sum_{i : \overline{x}_{t, i} \not\in (a_n, b_n)} \overline{x}_{t, i} \leq (1-z) + (1 - z) = 2(1-z).
+	\]
+	As $n \to \infty$, we have $z \to 1$ and hence $\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as desired. 
+\end{proof}
+\begin{lem}
+	$\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2 \leq \frac{2b_n^2}{a_n}$ for sufficiently large $n$. 	
+\end{lem}
+
+\begin{proof}
+	We have that 
+	\begin{align*}
+		\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2 & \leq \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \left ( \overline{x}_{t, i} - \frac{z}{n} \right )^2 + \frac{1}{n}
+	\end{align*}
+	where $z$ is the quantity
+	\[
+		z = \sum_{i \in \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \in [0, 1].
+	\]
+	Thus, we can bound 
+	\[
+		\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2	\leq \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \left ( \overline{x}_{t, i} \right )^2 + \frac{1}{n} \leq \frac{b_n^2}{a_n} + \frac{1}{n}.
+	\]
+	It is easily checked that $b_n^2 / a_n >> 1/n$, so for sufficiently large $n$ we have the desired bound. 
+\end{proof}
+
+\begin{lem}
+	For any $s > 0$, we have that $\norm{x_{t+s} - \widehat{x}_{t+s}}_1 \leq \norm{x_t - \widehat{x}_t}_1$. 
+\end{lem}
+\begin{proof}
+	It suffices to prove that given two initial vectors $x_0, y_0 \in [0, 1]^n$ with $\norm{x_0}_1 =\norm{y}_1 = 1$ and $x_1, y_1$ the vectors after performing the same averaging on $x_0, y_0$ respectively, then $\norm{x_1 - y_1}_1 \leq \norm{x_0 - y_0}_1$. By considering $z_0 = x_0 - y_0$ and $z_1 = x_1 - y_1$, it suffices to prove that if the average coordinates of $z_0$ is $0$ and $z_1$ is the result of averaging some of the coordinates of $z_0$, then $\norm{z_1}_1 \leq \norm{z_0}_1$. Suppose we averaged the values $u_1, \ldots, u_k$. Then, we have that
+	\[
+		k \cdot \left | \frac{u_1 + \ldots + u_k}{k} \right | = |u_1 + \ldots + u_k| \leq |u_1| + \ldots + |u_k|.
+	\]
+	This proves the lemma. 
+\end{proof}
+
+Now let $\Omega > 0$ be a constant which is larger than both $2\gamma$ and $7 / 2(\mu - 1)$. Let $s = \Omega (n-1) (\log n)^{3/4}$. Then, we have the following lemma. 
+
+\begin{lem}
+	$T(s+t) \to 0$ as $n \to \infty$ almost surely. 
+\end{lem}
+
+\begin{proof}
+	Let $T', S'$ be the $L^1$ and $L^2$ distances of the process $\widehat{x}$. From Lemma (???), we have that
+	\begin{align*}
+		S'(t+s) & = \exp \left ( - \frac{s (\mu-1)}{(n-1)} \right ) S'(s) \\
+		& \leq \exp(- \Omega (\mu-1) (\log n)^{3/4}) \cdot \frac{2b_n^2}{a_n} \\
+		& = 2 \exp \left ( \left \{ \frac{7}{2} - \Omega (\mu - 1) \right \} (\log n)^{3/4} \right ) \cdot \frac{1}{n}.
+	\end{align*}
+	From the Cauchy-Schwartz inequality, we have that
+	\[
+		(T'(t+s))^2 \leq n S'(t+s) \leq 2 \exp \left ( \left \{ \frac{7}{2} - \Omega (\mu - 1) \right \} (\log n)^{3/4} \right ) = o(1).
+	\]
+	This gives us $\norm{\widehat{x}_{t+s} - \frac{1}{n} \cdot \1}_1 = o(1)$. From the triangle inequality, we have
+	\begin{align*}
+		\norm{x_{t+s} - \frac{1}{n} \cdot \1}_1 & \leq \norm{x_{t+s} - \widehat{x}_{t+s}}_1 + \norm{\widehat{x}_{t+s} - \frac{1}{n} \cdot \1}_1 \\
+		& \leq \norm{x_t - \widehat{x}_t} + o(1) \\
+		& \leq \norm{x_t - \overline{x}_t}_1 + \norm{\overline{x}_t - \widehat{x}_t}_1 + o(1) \\
+		& = o(1).
+	\end{align*}
+	This proves the lemma. 
+\end{proof}
 \bibliographystyle{plain}
 \bibliography{ref}
 \end{document}
