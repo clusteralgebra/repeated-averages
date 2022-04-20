@@ -12,59 +12,47 @@
 
 \section{Introduction}
 
-In \cite{chatterjee2021phase}, Chatterjee, Diaconis, Sly, and Zhang are interested in the following Markov chain. 
-\begin{defn}[Markov Chain I]
-	We have a Markov chain $x_0, x_1, \ldots$ where $x_0$ is some initial vector in $\RR^n$. Notation-wise, let $x_k = (x_{k, 1}, \ldots, x_{k,n})$. The Markov chain progresses as follows: given $x_k$ pick two distinct coordinates $I$ and $J$ uniformly at random, and replace $x_{k, I}$ and $x_{k, J}$ by their average $\frac{x_{k, I} + x_{k, J}}{2}$.
+In \cite{chatterjee2021phase}, Chatterjee, Diaconis, Sly, and Zhang analyze the Markov chain defined in Definition~\ref{discrete-binary-markov-chain} which evolves through binary averages.  
+\begin{defn}[Binary Markov Chain] \label{discrete-binary-markov-chain}
+	Let $\msB = \{x_t\}_{t \in \ZZ_{\geq 0}}$ where $x_0 \in \RR$ is some initial vector in $\RR^n$. The vector $x_{k+1}$ is determined picking two distinct coordinates of $x_k$ uniformly at random and replacing both of them by their average. 
 \end{defn}
-We want to study the rate of convergence of this Markov chain to its average $(\ol{x}_0, \ldots, \ol{x}_0)$ where
-\[
-	\ol{x_0} = \frac{x_{0, 1} + \ldots + x_{0, n}}{n}.	
-\]
-Without loss of generality, we may assume $\bar{x_0} = 0$ unless otherwise specified. We can measure the distance of our Markov chain to the average in many ways. The functions $T(k)$ and $S(k)$ defined below are the $L^1$ and $L^2$ measurements. 
+
+The binary Markov chain in Definition~\ref{discrete-binary-markov-chain} traces a discrete trajectory on a $n-1$-dimensional hyperplane in $\RR^n$. As $t \to \infty$, the Markov chain will converge to the uniform vector of the average of the coordinates almost surely. In this paper, we will be interested in the rate of convergence to the average for generalizations of this Markov chain. Let the $x^\mu$ be the average value of the coordinates of $x_0$. Then, we consider two measurements of the distance from the average which correspond to the $L^1$ and $L^2$ distances. Following \cite{chatterjee2021phase}, we define the $T$ and $S$ functions explicitly as 
 \begin{align*}
-	T(k) & := \sum_{i = 1}^n |x_{k, i} - \ol{x}_0| \\
-	S(k) & := \sum_{i = 1}^n |x_{k, i} - \ol{x}_0|^2.
+	T(k) & := \sum_{i = 1}^n |x_{k, i} - \ol{x}_0|, \quad S(k) := \sum_{i = 1}^n |x_{k, i} - \ol{x}_0|^2.
 \end{align*}
 
-For the $L^2$ norm measurement, an exact value is given in \cite{chatterjee2021phase}.
+We are now interested in the rate of convergence and the existence of a cutoff time. In \cite{chatterjee2021phase}, an explicit formula for the expected $L^2$ distance was found and is given in Proposition~\ref{binary-explicit-l2}.
 
-\begin{prop}[Proposition 2.1 in \cite{chatterjee2021phase}]
+\begin{prop}[Proposition 2.1 in \cite{chatterjee2021phase}] \label{binary-explicit-l2}
 	For any $k \geq 0$, we have 
 	\[
-		\EE (S(k+1) | \mcF_k) = \left ( 1 - \frac{1}{n-1} \right ) S(k).
+		\EE \left [ S(k+1) | \mcF_k \right ] = \left ( 1 - \frac{1}{n-1} \right ) S(k).
 	\]	
 \end{prop}
 
-This formula gives us an exact formla for the decay of the $L^2$ distance of our Markov chain to the average. The main result in the paper was the behavior of the $L^1$ decay. 
+Propostion~\ref{binary-explicit-l2} implies that the $L^2$ norm decays exponentially. The main result \cite{chatterjee2021phase} was concerning the decay and cutoff of the $L^1$ norm. In particular, the main theorem in \cite{chatterjee2021phase} given in Theorem~\ref{main-theorem-old} finds the second order behavior of the $L^1$ distance. 
 
-\begin{thm}[Theorem 1.2 in \cite{chatterjee2021phase}] \label{main-theorem}
+\begin{thm}[Theorem 1.2 in \cite{chatterjee2021phase}] \label{main-theorem-old}
 	Let $\Phi : \RR \to [0, 1]$ be the cumulative distribution function of the standard normal distribution $N(0, 1)$. For $x_0 = (1, 0, \ldots, 0)$, and any $a \in \RR$, as $n \to \infty$ we have 
 	\[
-		T(\lfloor n(\log_2(n) + a \sqrt{\log_2(n)}) \rfloor) \xrightarrow{\PP} 2 \Phi(-a)
+		T(\lfloor n(\log_2(n) + a \sqrt{\log_2(n)}) \rfloor) \xrightarrow{\PP} 2 \Phi(-a).
 	\]
-	where the convergence is in probability. 
 \end{thm}
 
-Clearly, Theorem~\ref{main-theorem} implies the following result. 
+By weakening the result in Theorem~\ref{main-theorem-old}, Corollary~\ref{easy-corollary} follows easily and has a more succinct statement. 
 
-\begin{cor}[Theorem 1.1 in \cite{chatterjee2021phase}]
+\begin{cor}[Theorem 1.1 in \cite{chatterjee2021phase}] \label{easy-corollary}
 	For $x_0 = (1, 0, \ldots, 0)$ as $n \to \infty$ we have $T(\theta n \log n) \xrightarrow{\PP} 2$ for $\theta < 1/(2 \log 2)$ and $T(\theta n \log n) \xrightarrow{\PP} 0$ for $\theta > 1/(2 \log 2)$. 
 \end{cor}
 
-In the proof of Theorem~\ref{main-theorem}, to avoid issues of dependence in the discrete time setting, Markov chain I is approximated with a Poissonized continuous-time version of the same Markov chain. 
+One of the main techniques in the proof of Theorem~\ref{main-theorem-old} was to poissonize the process in order to avoid issues of dependence in the discrete time setting. This poissonized version of the Markov chain is described in Definition~\ref{continuous-binary-averages}. 
 
-\begin{defn}[Markov Chain II]
-	Denote our Markov chain by $\{x_t\}_{t \geq 0}$. Give each pair of coordinates an independent Poisson clock with rate $\binom{n}{2}^{-1}$. When a clock rings, replace the corresponding pair of coordinates with their average. 
+\begin{defn}[Poissonized Binary Markov Chain] \label{continuous-binary-averages}
+	Let $\msB' = \{x_t\}_{t \in \RR_{\geq 0}}$ where $x_0 \in \RR$ is some initial vector in $\RR^n$. We can associate an independent Poisson clock of rate $\binom{n}{2}^{-1}$ to each pair of coordinates. When one of the clocks ring, average the corresponding coordinates.  
 \end{defn}
 
-By giving each pair of coordinates a clock of rate $\binom{n}{2}^{-1}$, we make it so that on average, one averaging happens every unit of time. Thus, this Poissonized version is a suitable approximation of our original process. With this new Markov chain, we introduce the same $L^1$ and $L^2$ measurements from the average:
-
-\begin{align*}
-	T'(k) & := \sum_{i = 1}^n \abs{x_{t, i} - \ol{x}_0} \\
-	S'(k) & := \sum_{i = 1}^n \abs{x_{t, i} - \ol{x}_0}^2.
-\end{align*}
-
-Similar to the discrete case, we are still able to get an exact formula for the $L^2$ measurement. 
+By giving each pair of coordinates an independent clock of rate $\binom{n}{2}^{-1}$, we are equivalently having a single clock of rate $1$ which then, upon ringing, picks two distinct coordinates uniformly at random and replaces them by their average. Thus, $\msB'$ seems to be suitable approximation of $\msB$. Let $T'$ and $S'$ be the corresponding $L^1$ and $L^2$ distances from the average of $\msB'$. Similar to the discrete case, there is still an explicit formula for the $L^2$ distance.
 
 \begin{prop}
 	For any $t \geq s \geq 0$, we have that 
@@ -75,7 +63,7 @@ Similar to the discrete case, we are still able to get an exact formula for the 
 \begin{proof}
 	Let $E_k$ be the event that there are $k$ rings between times $s$ and $t$. Then 
 	\begin{align*}
-		\EE [ S'(t) | \mcF_s ] & = \sum_{k = 0}^\infty \EE \bparens{S'(t) | \mcF_s \text{ and $k$ rings}} \cdot \Pr[E_k] \\
+		\EE [ S'(t) | \mcF_s ] & = \sum_{k = 0}^\infty \EE \bparens{S'(t) | \mcF_s \text{ and } E_k} \cdot \Pr[E_k] \\
 		& = \sum_{k = 0}^\infty \parens{1 - \frac{1}{n-1}}^k S'(s) \cdot e^{-(t-s)} \cdot \frac{(t-s)^k}{k!} \\
 		& = \exp \parens{ (t-s) \parens{1 - \frac{1}{n-1}}} \cdot e^{-(t-s)} S'(s) \\
 		& = \exp \parens{- \frac{t-s}{n-1}} \cdot S'(s). 
@@ -83,7 +71,7 @@ Similar to the discrete case, we are still able to get an exact formula for the 
 	This suffices for the proof. 
 \end{proof}
 
-The same result $L^2$ decay result holds for the continuous-time case. 
+Then, \cite{chatterjee2021phase} focuses on the proof of Theorem~\ref{main-theorem-continuous} as this a good enough approximation of Theorem~\ref{main-theorem-old} to imply it. 
 
 \begin{thm}[Theorem 2.3 in \cite{chatterjee2021phase}] \label{main-theorem-continuous}
 	Take $\Phi : \RR \to [0, 1]$ as the cdf of the standard normal distribution. For any $a \in \RR$, we have $T'(n (\log_2(n) +a \sqrt{\log_2(n)})/2) \pconverge 2 \Phi(-a)$ in probability as $n \to \infty$. 
@@ -96,100 +84,86 @@ The same result $L^2$ decay result holds for the continuous-time case.
 	TODO
 \end{proof}
 
-We now consider some extensions of the problem. 
+This completes the discussion about the motivating problem. In the sequel, we generalize the Markov chain to allow our averages to be of random (but bounded) size.  
 
-\section{Deterministic Generalized Averages}
+\section{Random Bounded Averages}
 
-The first generalization involves taking larger averages at each unit of time instead of simply averaging two positions. This variant is very similar to the original version, thus we won't go into all of the details. We will only do the initial computations to illustrate the similarities. 
+In this section, we will consider the same Markov chain as Definition~\ref{continuous-binary-averages}, but at each averaging we average some random number of coordinates where the random number is sampled from a fixed distribution. 
+
+\begin{defn} \label{main-markov-chain}
+	Let $Q$ be a random variable supported in a finite set $\{2, 3, \ldots, N\}$ such that $\Pr[Q = k] = q_k$ for all $k$, $2 \leq k \leq N$. Let $\msP_Q := \{x_t\}_{t \in \RR_{\geq 0}}$ be a Markov chain with $x_0 = (1, 0, \ldots, 0)$. The Markov chain $\msR_Q$ is equipped with a Poisson clock of rate $1$. Whenever the clock rings, we independently sample a number $m$ from the law of $Q$. We then uniformly pick $m$ distinct coordinates and replace them by their average. Let $S$ and $T$ be the $L^2$ and $L^1$ distances to the mean. 
+\end{defn} 
+
+Note that in Definition~\ref{main-markov-chain}, we set the initial value as $x_0 = (1, 0, \ldots, 0)$. But, according to an argument in \cite{chatterjee2021phase}, we do not lose much generality in this choice because the Markov chain takes the longest to converge at this choice. Moreover, even if we did choose a different starting position, the main ideas of the argument do not change.
+
+\subsection{Explicit Formulae for the Squared Distance to Mean} 
+
+It will be useful to consider a less general version of Definition~\ref{main-markov-chain} but more general than Definition~\ref{discrete-binary-markov-chain}. Instead of averaging two elements every time, we average some fixed number of coordinates $m$. 
 
 \begin{defn}
-	Let $\msM_m^n$ be the markov chain $\{x_k\}_{k \geq 0} \subset \RR^n$ where $x_0$ is some initial vector in $\RR^n$ and $x_{k+1}$ is obtained from $x_k$ by uniformly picking $m$ distinct coordinates at random and replacing them by their average. Let $\PP \msM_m^n = \{x_t\}_{t \in \RR_{\geq 0}}$ be the Poissonized version of the process where we assign independent clocks of rate $\binom{n}{m}^{-1}$ to every $m$-subset of coordinates. Whenever a clock rings, we replace the corresponding coordinates by their average. 
+	Let $\msB_m$ be the markov chain $\{x_t\}_{t \in \ZZ_{\geq 0} } \subset \RR^n$ where $x_0$ is some initial vector in $\RR^n$ and $x_{k+1}$ is obtained from $x_k$ by uniformly picking $m$ distinct coordinates at random and replacing them by their average. Let $\msB_m'$ be the poissonized version of $\msB_m$. 
 \end{defn}
 
-We want to study the rate of convergence of this Markov chain to its average $(\ol{x}_0, \ldots, \ol{x}_0)$ where 
-\[
-	\ol{x}_0 := \frac{\langle x_0, \1 \rangle}{n}.	
-\]
-\begin{remark}
-	Without loss of genearlity, $\ol{x}_0 = 0$ and in general the slowest rates of convergence seem to take place when all of the weight is concentrated on a single coordinate vector. Thus, we could consider initial vectors 
-	\[
-		x_0 = \left ( 1 - \frac{1}{n}, - \frac{1}{n}, \ldots, - \frac{1}{n} \right ).
-	\]	
-\end{remark}
-We have two ways to measure the distance from the average:
-\begin{align*}
-	T(k) & := \norm{x_k - x_0}_{L^1} \\
-	S(k) & := \norm{x_k - x_0}_{L^2}.
-\end{align*}
+Let $S_m$ and $S_m'$ be the corresponding $L^2$ distances from the mean.
 
-\begin{prop}
-	Let $\{x_k\}_{k \geq 0} = \msM_m^n$. For any $k \geq 0$, we have 
+\begin{prop} \label{explicit-formula-1}
+	For any $k \geq 0$, we have 
 	\[
-		\EE \left [ S(k+1) | \mcF_k \right ] = \left ( 1 - \frac{m-1}{n-1} \right ) S(k).	
+		\EE \left [ S_m(k+1) | \mcF_k \right ] = \left ( 1 - \frac{m-1}{n-1} \right ) S_m(k).	
 	\]
 \end{prop}
 
 \begin{proof}
-	We have 
+	Witout loss of generality, we can assume that the average of the coordinates is $0$. Then, we have 
 	\begin{align*}
-		\EE \left [ S(k+1) | \mcF_k \right ] & = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S(k) - \sum_{j = 1}^m x_{k, i_j}^2 + m \left ( \frac{x_{k, i_1} + \ldots + x_{k, i_m}}{m} \right )^2 \right \} \\
-		& = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S(k) - \sum_{j = 1}^m x_{k, i_j}^2  + \frac{1}{m} \sum_{j = 1}^m x_{k, i_j}^2 + \frac{1}{m} \sum_{1 \leq u < v \leq m} x_{k, i_u} x_{k, i_v} \right \} \\
-		& = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S(k) + \frac{1-m}{m} \sum_{j = 1}^m x_{k, i_j}^2 + \frac{1}{m} \sum_{1 \leq u < v \leq m} x_{k, i_u} x_{k, i_v} \right \} \\
-		& = S_1 + S_2 + S_3
+		\EE \left [ S_m(k+1) | \mcF_k \right ] & = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S_m(k) - \sum_{j = 1}^m x_{k, i_j}^2 + m \left ( \frac{x_{k, i_1} + \ldots + x_{k, i_m}}{m} \right )^2 \right \} \\
+		& = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S_m(k) - \sum_{j = 1}^m x_{k, i_j}^2  + \frac{1}{m} \sum_{j = 1}^m x_{k, i_j}^2 + \frac{1}{m} \sum_{1 \leq u < v \leq m} x_{k, i_u} x_{k, i_v} \right \} \\
+		& = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \left \{ S_m(k) + \frac{1-m}{m} \sum_{j = 1}^m x_{k, i_j}^2 + \frac{1}{m} \sum_{1 \leq u < v \leq m} x_{k, i_u} x_{k, i_v} \right \} \\
+		& = \Sigma_1 + \Sigma_2 + \Sigma_3
 	\end{align*}
 	where 
 	\begin{align*}
-		S_1 & := \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} S(k) \\
-		S_2 & := \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1-m}{m} \sum_{j = 1}^m x_{k, i_j}^2 \\
-		S_3 & = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1}{m} \sum_{1 \leq u < v \leq m} 2x_{k, i_u} x_{k, i_v}.
+		\Sigma_1 & := \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} S_m(k) \\
+		\Sigma_2 & := \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1-m}{m} \sum_{j = 1}^m x_{k, i_j}^2 \\
+		\Sigma_3 & = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1}{m} \sum_{1 \leq u < v \leq m} 2x_{k, i_u} x_{k, i_v}.
 	\end{align*}
-	For the first sum, we immediately get $S_1 = S(k)$. For the second sum, we get 
+	For the first sum, we immediately get $S_1 = S_m(k)$. For the second sum, we get 
 	\begin{align*}
-		S_2 & = \binom{n}{m}^{-1} \cdot \frac{1-m}{m} \cdot \binom{n-1}{m-1} S(k) = \frac{1-m}{n} S(k). 
+		S_2 & = \binom{n}{m}^{-1} \cdot \frac{1-m}{m} \cdot \binom{n-1}{m-1} S_m(k) = \frac{1-m}{n} S_m(k). 
 	\end{align*}
 	For the last sum, we get 
 	\[
-		S_3 = \binom{n}{m}^{-1} \cdot \frac{1}{m} \cdot \binom{n-2}{m-2} \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = \frac{1-m}{n(n-1)} S(k)
+		S_3 = \binom{n}{m}^{-1} \cdot \frac{1}{m} \cdot \binom{n-2}{m-2} \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = \frac{1-m}{n(n-1)} S_m(k)
 	\]
 	where we used the fact that 
 	\[
-		S(k) + \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = (x_{k, 1} + \ldots + x_{k, n})^2 = 0.	
+		S_m(k) + \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = (x_{k, 1} + \ldots + x_{k, n})^2 = 0.	
 	\]
 	Then 
 	\[
-		\EE [S(k+1) | \mcF_k] = \left ( 1 + \frac{1-m}{n} + \frac{1-m}{n(n-1)} \right ) S(k) = \left ( 1 - \frac{m-1}{n-1} \right ) S(k).	
+		\EE [S_m(k+1) | \mcF_k] = \left ( 1 + \frac{1-m}{n} + \frac{1-m}{n(n-1)} \right ) S_m(k) = \left ( 1 - \frac{m-1}{n-1} \right ) S_m(k).	
 	\]
 \end{proof}
 
-\begin{cor}
-	Let $\{x_t\}_{t \in \RR_{\geq 0}} = \PP \msM_m^n$. For $0 \leq s < t$, we have 
+\begin{cor} \label{explicit-formula-2}
+	For $0 \leq s < t$, we have 
 	\[
-		\EE [S^*(t) | \mcF_s] = \exp \left ( \frac{(t-s)(m-1)}{n-1} \right ) S^*(s).	
+		\EE [S_m'(t) | \mcF_s] = \exp \left ( -\frac{(t-s)(m-1)}{n-1} \right ) S_m'(s).	
 	\]
 \end{cor}
 \begin{proof}
 	We have 
 	\begin{align*}
-		\EE [ S^*(t) | \mcF_s ] & = \sum_{k = 0}^\infty \Pr[k \text{ rings}] \cdot \EE \left [ S^*(t) | \mcF_s \text{ and } k \text{ rings} \right ] \\
-		& = \sum_{k = 0}^\infty \frac{(t-s)^k}{k!} \cdot e^{-(t-s)} \cdot \left ( 1 - \frac{m-1}{n-1} \right )^k S^*(s) \\
-		& = \exp \left ( -\frac{(t-s)(m-1)}{n-1} \right ) S^*(s). 
+		\EE [ S_m'(t) | \mcF_s ] & = \sum_{k = 0}^\infty \Pr[k \text{ rings}] \cdot \EE \left [ S_m'(t) | \mcF_s \text{ and } k \text{ rings} \right ] \\
+		& = \sum_{k = 0}^\infty \frac{(t-s)^k}{k!} \cdot e^{-(t-s)} \cdot \left ( 1 - \frac{m-1}{n-1} \right )^k S_m'(s) \\
+		& = \exp \left ( -\frac{(t-s)(m-1)}{n-1} \right ) S_m'(s). 
 	\end{align*}
 \end{proof}
 
-As the prevous computatoins show, the results are very similar and a similar result as Theorem~\ref{main-theorem} should hold (Maybe find the specific constant)?.
+Proposition~\ref{explicit-formula-1} and Corollary~\ref{explicit-formula-2} will allow us to easily compute the $L^2$ distance for the random bounded averages case. 
 
-\section{Random Bounded Averages}
-
-Now, we consider the variant where at each unit time we average a random number of elements. Let $Q$ be the random variable with distribution $(q_2, \ldots, q_N)$ where $N \geq 1$ is a fixed positive integer and $\Pr[Q = k] = q_k$ for all $k$, $2 \leq k \leq N$. We will fix this distribution throughout the section. 
-
-\begin{defn}
-	Let $\mathsf{RM} := \{x_k\}_{k \geq 0} \subset \RR^n$ be the Markov chain where $x_0$ is some initial vector and $x_{k+1}$ is obtained from $x_k$ by uniformly picking $Q_k$ distinct coordinates at random and replacing them by their average where the random variables $Q_1, Q_2, \ldots$ are independent, identically distributed with the same law as $Q$. Let $\mathsf{PRM} := \{x_k\}_{k \geq 0} \subset \RR^n$ be the Poissonized version of $\mathsf{RM}$ where we have a Poisson clock of rate $1$ and every time it rings we perform an averaging in the same way as in the discrete-time setting. 
-\end{defn} 
-
-Before we do further analysis, we first show that we can get explicit formulas for the expectations of the $L^2$ bound. The first formula is for the base version of the process $\mathsf{RM}$.
-
-\begin{prop}
-	Let $S(k)$ be the $L^2$ distance at time $k$. Then 
+\begin{prop} \label{explicit-formula-discrete-YESYES}
+	Let $S(k)$ be the $L^2$ distance at time $k$ of the discrete version of $\msP_Q$. Then 
 	\[
 		\EE \left [ S(k+1) | \mcF_k \right ] = \left ( 1 - \frac{\mu - 1}{n-1} \right ) S(k). 
 	\]
@@ -205,15 +179,15 @@ Before we do further analysis, we first show that we can get explicit formulas f
 	\end{align*}
 \end{proof}
 
-\begin{cor}
-	Let $S^*(t)$ be the $L^2$ distance at time $t$ for the Poissonized process. Then 
+\begin{cor} \label{explicit-formula-continuous-YESYES}
+	Let $S(t)$ be the $L^2$ distance at time $t$ of $\msP_Q$. Then 
 	\[
 		\EE \left [ S^*(t) | \mcF_s \right ] = \exp \left ( - \frac{(t-s)(\mu - 1)}{n-1} \right ) S^*(s).
 	\]
 \end{cor}
 
 \begin{proof}
-	The proof is very similar to the proof of Corollary ???. We can compute 
+	The proof is very similar to the proof of Corollary~\ref{explicit-formula-2} now that we have Proposition~\ref{explicit-formula-discrete-YESYES}. We can compute 
 	\begin{align*}
 		\EE \left [S^*(t) | \mcF_s \right ] & = \sum_{k = 0}^\infty \Pr[k \text{ rings}] \cdot \EE \left [ S^*(t) | \mcF_s \text{ and } k \text{ rings} \right ] \\
 		& = \sum_{k = 0}^\infty \frac{(t-s)^k}{k!} \exp (-(t-s)) \cdot \left ( 1 - \frac{\mu - 1}{n-1} \right )^k S^*(s) \\
@@ -221,43 +195,48 @@ Before we do further analysis, we first show that we can get explicit formulas f
 	\end{align*}
 \end{proof}
 
-We can equivalently formulate $\mathsf{PRM}$ by splitting our clock of rate $1$ to $N-1$ independent Poisson clocks $C_2, \ldots, C_N$ where $C_k$ is a Poisson clock of rate $p_k$. Then our original clock is then equivalent to the amalgamation of our clocks $C_2, \ldots, C_N$ where when the $k$th clock rings we pick $k$ random positions and replace them by their average. In the original version of the problem, one key approximation step was to condition on the event that no average was performed on two non-zero elements. Let's assume in this case that the probability that we average at least two non-zero elements is negligible. (PROVE LATER?) Then, we can view our Markov chain as a type of branching process on an interval $[0, 1]$. The interval $[0, 1]$ in its initial state represents all of the weight being in one position. Averagings then are represented by an interval being split into multiple equal length intervals. The clock $C_k$ rings with rate $q_k$. When it rings, there is a probability of $k/n$ that any given interval will be split into $k$ equal parts. Equivalently, to every interval, we can attach a clock of rate $\sum_{k = 2}^N q_k \frac{k}{n} = \mu / n$ where whenever it rings, the probability we split the interval into $k$ parts is 
-\[
-	\frac{q_k \cdot (k/n)}{\mu /n} = \frac{k q_k}{\mu}.
-\]
-Let $Q'$ be the random variable with distribution $(2q_2/\mu, \ldots, Nq_N/\mu)$ where $\Pr[Q' = k] = kq_k / \mu$. So to each interval we attach a clock of rate $\mu / n$ and when it rings we split into a random number of equal parts according to the law of $Q'$. Let $I_t$ be the set of intervals at time $t$. In the proof of the original problem, we found a time where the total content of the intervals were ``close'' to $1/n$. At this time, we can then apply the $L^2$ bound which will give the correct cutoff time. In other words, we want to find a time $t(n)$ and constants $a_n, b_n$ where $1/n << a_n < b_n \sim n^{-1 + o(1)}$ such that 
-\[
-	\Pr \left ( \sum_{I \in I_{t(n)}} \mu(I) \cdot \1_{a_n < \mu(I) < b_n}  \geq 1 - o(1) \right ) \geq 1 - o(1).
-\]
-For $x \in [0, 1]$, let $I_t^x$ be the interval of the point $x$ at time $t$. Consider $\log |I_t^x|$. To this interval we have clocks $D_2, \ldots, D_N$ where $D_k$ has rate $q_k \cdot k/n$. When clock $D_k$ rings, then $\log |I_t^x|$ increases by $\log (1/k)$. This we can represent the process of $\log |I_t^x|$ as 
-\[
-	\log |I_t^x| = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \text{Poiss} \left (q_k \cdot \frac{k}{n}\right ).
-\]
-Thus, the distribution of $\log |I_t^x|$ for fixed $x$ is well understood. We are interested in the random variable 
-\[
-	X = \sum_{I \in I_{t(n)}} \mu(I) \cdot \1_{a_n < \mu(I) < b_n}.
-\] 
-The expected value of $X$ can be computed by exploiting the symmetry of the interval:
-\[
-	\EE[X] = \EE \int_0^1 \1_{|I_{t(n)}^x| \in (a_n, b_n)} \, dx = 	\int_0^1 \Pr[|I_{t(n)}^x| \in (a_n, b_n)] dx = \Pr[|I_{t(n)}^x| \in (a_n, b_n)]
-\]
-from Fubini's Theorem. To have any hope in producing the bound (???), we need to understand the probability $\Pr[|I_{t(n)}^x| \in (a_n, b_n)]$. Note that 
-\begin{align*}
-	\Pr[|I_{t(n)}^x| \in (a_n, b_n)] = \Pr[\log |I_{t(n)}^x| \in (\log a_n, \log b_n)].
-\end{align*}
-\subsection{Logarithmic Length of the Interval Trajectory}
-Recall that for any fixed $t > 0$, we have that 
-\[
-	\log |I_t^x| = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \mathsf{Poisson} \left (\frac{q_k k}{n} \cdot t \right ).
-\]
+\subsection{Coupling with Fragmentation and Branching Processes}
 
-\begin{lem}
-	Suppose $X_t \sim \mathsf{Poisson}(t)$ for all $t$. Then 
+We recall the definition of our original process for the random bounded averages case and we define two new processes, the first of which is a type of fragmentation process and the second of which is a type of branching process. 
+
+\begin{defn} [Original Process]
+	Let $\mathsf{P} := \{x_t\}$ be the Markov chain where $x_0 = (1, 0, \ldots, 0) \in \RR^n$. We have a Poisson clock of rate $1$. Everytime this clock rings, we pick some random coordinates to average where the random number is sampled randomly from $Q$. 
+\end{defn}
+
+\begin{defn} [Fragmentation Process]
+	Let $\mathsf{P}_{\mathsf{FRAG}} := \{\overline{x}_t\}$ be the Markov chain where $\overline{x}_0 = (1, 0 \ldots, 0) \in \RR^n$. It evolves in the same way as $\{x_t\}$ except when we average at least two positive coordinates, we throw away all of the coordinates. Moreover, when intervals become smaller than $a_n$, we also throw them away. This is a fragmentation process version of the original process where we throw out piles which become too small. 
+\end{defn}
+
+\begin{defn} [Branching Process] \label{branching-definition}
+	Let $\mathsf{P}_{\mathsf{BRANCH}} := \{I_t\}$ be a Markov chain where $I_0 = [0, 1]$. Each $I_t$ will consist of a collection of intervals which partition $[0, 1]$. To each interval of $I_t$, we attach a clock of rate $\mu / n$ and when it rings we split that interval up into a random number of equal parts according to the law of $Q'$ with distibution $(2q_2 / \mu, \ldots, Nq_N /\mu)$. That is, for any $2 \leq k \leq N$, we have $\Pr[Q' = k] = kq_k/\mu$. 
+\end{defn}
+
+We now describe how we couple the processes $\msP$, $\FRAG$, and $\BRANCH$ so that $\FRAG$ acts as an approximation of $\msP$, and $\BRANCH$ is an approximation of $\FRAG$ where our approximations are fine enough to conclude information about the $L^1$ convergence. 
+
+\begin{quote}
+	We couple $\msP$ and $\FRAG$ in the obvious way: whenever we average some piles on $\msP$, we average the same exact piles in $\FRAG$ while keeping the averaging rules consistent in each process. The coupling between $\FRAG$ and $\BRANCH$ is a bit more complicated. In order to couple the two processes, we attach to each interval set $I_t$ a labelling function $\pi_t : I_t \to [n] \cup \{0\}$ which assigns labels to intervals. The labelling function will always be injective on the intervals which are not given the label $0$. Morally, if $I \in I_t$ satisfies $\pi_t(I) = k$ for some $k \in [n]$, the interval $I$ ``represents'' the interval $k$ and will satisfy $|I| = \overline{x}_{t, k}$. To see how this labelling function evolves, we first initialize $\pi_0([0, 1]) = 1$. This reflects the initial vector $(1, 0, \ldots, 0)$ since the whole interval represents the first pile and the other piles are assigned. Consider the sequence of averagings in $\overline{x}_t$ which we can say occur at times $t_1 < t_2 < \ldots$ since the times occur at a discrete set of points almost surely. We initially remove all of the clocks from all of the intervals. Now, suppose we are at time $t_i$ awaiting the evolution of our process $I_t$. If at time $t_{i+1}$, a positive pile is averaged with only zero piles, we take the interval corresponding to this positive pile and split it into equal pieces while assigning the piles we averaged to the equal pieces in a one-to-one manner. If at time $t_{i+1}$, we average at least two positive piles together, then we split each of the intervals corresponding to the positive piles into the correct number of equal pieces, remove the labels of the intervals corresponding to these piles, and attach Poisson clocks of rate $\mu / n$ to each of them such that when it rings we split it into equal pieces based on the law of $Q'$. We also let the other intervals currently with clocks evolve naturally. To prove that this forms a valid coupling, it suffices to prove that the marginal law of $\BRANCH$ is as described in Definition~\ref{branching-definition}. To see this, we require to go back to our original process $\{x_t\}$. We can split our Poisson clock of rate $1$ into separate independent Poisson clocks $C_2, \ldots, C_N$ where $C_k$ is a Poisson clock of rate $q_k$. When $C_k$ rings, we pick $k$ distinct coordinates uniformly and random and replace them by their average. If we fix a pile in $\{\overline{x}_{t, i}\}$ the probability that it gets picked to get averaged when $C_k$ rings is $\frac{k}{n}$. In particular, if $C_k$ rings, the probability that the corresponding interval in $I_t$ gets split into $k$ parts is also $\frac{k}{n}$. This is also true of intervals which are not associated with any pile in $\overline{x}_t$ by construction. Hence, every interval has a clock of rate $\frac{kq_k}{n}$ for all $k$ which dictates when that interval should shatter into $k$ equal pieces. By amalgmating all these clocks, we can equivalently view each interval having a clock of rate $\sum_{k = 2}^N q_k \frac{k}{n} = \mu / n$ where whenever it rings, the probability we split the interval into $k$ parts is 
 	\[
-		\frac{X_t - t}{\sqrt{t}} \xrightarrow{d} N(0, 1)	
+		\frac{q_k \cdot (k/n)}{\mu / n} = \frac{kq_k}{\mu}.
 	\]
-	where the convergence is in distribution.
+	This proves the coupling is a valid coupling. 
+\end{quote}
+From now on, let $t := \gamma n ( \log n - (\log n)^{3/4})$ and $\gamma = (\EE[Q \log Q])^{-1}$. Define the constants
+\begin{align*}
+	a_n := n^{-1 + \alpha(n)}, b_n := n^{-1 + \beta(n)},  \alpha(n) := \frac{1}{2} (\log n)^{-1/4}, \text{ and } \beta(n) := 2 (\log n)^{-1/4}.
+\end{align*}
+In particular, the constants where chosen that $\frac{1}{n} \ll a_n < b_n = n^{-1 + o(1)}$. 
+
+\subsection{Logarithmic Length of Interval Trajectories}
+In this section, we analyze the distribution of $|I_t^x|$ for any fixed $x \in [0, 1]$ where $I_t^x$ is defined to be the (leftmost) interval in $I_t$ which contains $x$. We first prove the following well-known result in Lemma~\ref{poisson-concentration} about Poisson concentration. 
+
+\begin{lem} \label{poisson-concentration}
+	Suppose $X_t \sim \mathsf{Poisson}(t)$ is a Poisson random variable of rate $t$. Then 
+	\[
+		\frac{X_t - t}{\sqrt{t}} \longrightarrow N(0, 1)
+	\]
+	where the convergence is in distribution. 
 \end{lem}
+
 \begin{proof}
 	Let $Y_n$ for $n \geq 1$ be iid Poisson random variables of rate $1$ and let $Z_t$ be a Poisson random variable of rate $\{t\}$. Then $X_t$ has the same distribution as 
 	\[
@@ -265,13 +244,27 @@ Recall that for any fixed $t > 0$, we have that
 	\]
 	Thus, we have that 
 	\begin{align*}
-		\frac{X_t - t}{\sqrt{t}} & = \frac{\sum_{i = 1}^{[t]} Y_i + Z_t-t}{\sqrt{t}} \\
-		& = \frac{\sqrt{[t]}}{\sqrt{t}} \cdot \frac{\sum_{i = 1}^{[t]} Y_i - [t]}{\sqrt{[t]}} + \frac{Z_t - \{t\}}{\sqrt{t}}.
+		\frac{X_t - t}{\sqrt{t}} & = \frac{\sum_{i = 1}^{[t]} Y_i + Z_t-t}{\sqrt{t}} = \frac{\sqrt{[t]}}{\sqrt{t}} \cdot \frac{\sum_{i = 1}^{[t]} Y_i - [t]}{\sqrt{[t]}} + \frac{Z_t - \{t\}}{\sqrt{t}}.
 	\end{align*}
 	Since $(Z_t - \{t\})/\sqrt{t} \to 0$ almost surely, the Lemma follows from the central limit theorem. 
 \end{proof}
-We can rewrite 
-\begin{align*}
+
+Lemma~\ref{poisson-concentration} will allow us to show that with high probability, $|I_t^x|$ lies in the interval $(a_n, b_n)$.
+
+\begin{lem} \label{high-probability-YES}
+	Let $x \in [0, 1]$ be a fixed real number. Then 
+	\[
+		\lim_{n \to \infty} \Pr [ |I_t^x| \in (a_n, b_n) ] = 1. 
+	\]
+\end{lem}
+
+\begin{proof}
+	Consider the process $\{I_s^x\}_{0 \leq s \leq t}$. In $\BRANCH$, this is the interval trajectory traced by the point $x$. To these intervals, we have a clock of rate $\mu / n$. When the clock rings, we split into $k$ equal segments with probability $kq_k / \mu$. Equivalently, for each $k$, we can give the interval a clock of rate $\frac{\mu}{n} \cdot \frac{kq_k}{\mu} = \frac{kq_k}{n}$. When this clock rings, then we split the interval into $k$ equal parts. When the $k$th clock rings, we multiply the length by $\frac{1}{k}$. Taking logarithms, we see that 
+	\[
+		\log |I_t^x| = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \mathsf{Poisson} \left ( \frac{q_k k}{n} \cdot t \right )
+	\]
+	in distribution. To reduce the clutter of the notation, let $P_k$ be the independent Poisson clock of rate $\frac{k q_k}{n} \cdot t$. Then, we can rewrite 
+	\begin{align*}
 	\log |I_t^x| & = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \left ( P_k - \frac{q_k k}{n} \cdot t \right ) + \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \frac{q_k k}{n} \cdot t	\\
 	& = \sqrt{\frac{t}{n}} \cdot \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \sqrt{q_k k} \cdot \left ( \frac{P_k - \frac{q_k k}{n} \cdot t}{\sqrt{\frac{q_k k}{n} t}} \right ) - \frac{t}{n} \EE[Q \log Q].
 \end{align*}
@@ -279,205 +272,193 @@ Rearranging, we get that
 \[
 	\frac{\log |I_t^x| + \frac{t}{n} \EE[Q \log Q]}{\sqrt{t/n}} = \sum_{k = 2}^N \log \left ( \frac{1}{k} \right ) \cdot \sqrt{q_k k} \cdot	\left ( \frac{P_k - \frac{q_k k}{n} \cdot t}{\sqrt{\frac{q_k k}{n} t}} \right ).
 \]
-From the Lemma, this gives 
+Lemma~\ref{poisson-concentration} then implies the following convergence in distribution:
 \[
-	\frac{\log |I_t^x| + \frac{t}{n} \EE[Q \log Q]}{\sqrt{t/n}} \to N \left (0, \sum_{k = 2}^N \log(k)^2 k q_k \right ) = N \left (0, \EE[Q (\log Q)^2] \right )
+	\frac{\log |I_t^x| + \frac{t}{n} \EE[Q \log Q]}{\sqrt{t/n}} \to N \left (0, \sum_{k = 2}^N \log(k)^2 k q_k \right ) = N \left (0, \EE[Q (\log Q)^2] \right ).
 \]
-in distribution. Define the constants
+Then, we can compute 
+\[
+	\Pr (|I_t^x| \in (a_n, b_n)) = \Pr \left ( \frac{\log |I_t^x| + \frac{t}{n} \EE[Q \log Q]}{\sqrt{t/n}} \in (A_n, B_n) \right )
+\]
+where
 \begin{align*}
 	A_n & = \sqrt{\frac{n}{t}} \cdot \left ( \log a_n + \frac{t}{n} \EE[Q \log Q] \right ) \\
 	B_n & = \sqrt{\frac{n}{t}} \cdot \left ( \log b_n + \frac{t}{n} \EE[Q \log Q] \right ).
 \end{align*}
-Suppose $a_n = n^{-1 + a(n)}$ and $b_n = n^{-1 + b(n)}$. 
+It is a standard calculation to check that $A_n \to -\infty$ and $B_n \to \infty$ as $n \to \infty$. Hence, 
+\[
+	\lim_{n \to \infty} \Pr (|I_t^x| \in (a_n, b_n)) = \lim_{n \to \infty} \Pr \left ( \frac{\log |I_t^x| + \frac{t}{n} \EE[Q \log Q]}{\sqrt{t/n}} \in (A_n, B_n) \right ) = 1
+\]
+since the random variable converges to a Gaussian. This proves the lemma. 
 
-\subsection{Trying Random Stuff}
+\end{proof}
+We now have all the tools needed to prove Theorem~\ref{main-theorem}. 
 
-Let's say $t := t_n = \gamma n (\log n - h(n))$ where $\gamma = \EE[Q \log Q]^{-1}$ and $h(n) = o(\log n)$. Then we have 
-\begin{align*}
-	A_n & := \sqrt{\frac{1}{\gamma (\log n - h(n))}} \cdot \left ( (-1 + a(n)) \log n + n(\log n - h(n)) \right ) \\
-	& = \frac{\log n}{\sqrt{\gamma (\log n - h(n)) }} \cdot \left ( a(n) - \frac{h(n)}{\log n} \right ) \\
-	B_n & := \frac{\log n}{\sqrt{\gamma (\log n - h(n)) }} \cdot \left ( b(n) - \frac{h(n)}{\log n} \right )
-\end{align*}
-Then we can let, 
-\begin{align*}
-	a(n) & = \frac{h(n)}{2 \log n} \\
-	b(n) & = \frac{2h(n)}{\log n}
-\end{align*}
-for example to ensure $A_n \to - \infty$ and $B_n \to \infty$. This gives us $\Pr[|I_t^x| \in (a_n, b_n)] \to 1$.
+\subsection{Proof of Theorem~\ref{main-theorem}}
 
-The main questions are now:
+\begin{prop}
+	As $n \to \infty$, 
+	\[
+		\sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \to 1
+	\]
+	almost surely. 
+\end{prop}
 
-\begin{enumerate}[label = (\alph*)]
-	\item Approximating the process with a new one, where we delete intervals if they get too small. Use this to prove that deleting intervals shouldn't be too bad. 
+\begin{proof}
+	Note that $\sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \leq 1$. Hence, it suffices to prove that its expected value converges to $1$. For $x \in [0, 1]$, define $I_t^x$ to be the interval in $I_t$ which contains $x$. If there are two such intervals, take the leftmost interval. Then, we have
+	\[
+		\EE \left [ \sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \right ] = \EE \left [ \int_0^1 \1_{|I_t^x| \in (a_n, b_n)} \, dx \right ] = \int_0^1 \EE[\1_{|I_t^x| \in (a_n, b_n)} ] dx
+	\]
+	where the last equality follows from Fubini's Theorem. Note that 
+	\[
+		\EE[\1_{|I_t^x| \in (a_n, b_n)}] = \Pr[|I_t^x| \in (a_n, b_n)].
+	\]
+	Miraculously, the probability on the right is independent of the point $x$ we pick! Thus, the expected value is
+	\[ 
+		\EE \left [ \sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \right ] = \Pr[|I_t^x| \in (a_n, b_n)]
+	\]
+	where $x \in [0, 1]$ is a fixed element. By taking the limit as $n \to \infty$, Lemma~\ref{high-probability-YES} finishes the proof of the proposition. 
+\end{proof}
 
-	\item 
-
-	\item 
-\end{enumerate}
-
-\subsection{New Process}
-
-Now that we have $a_n$, do a new process: the same but when an interval gets smaller than $a_n$ we throw it out. Moreover, if an interval gets averaged with a non-zero one, then we also throw it out. 
-
-\begin{question}
-	Let $x \in [0, 1]$. Then $\Pr[I_t^x \text{ gets averaged with non-zero pile}] \to 0$? uniformly
-\end{question}
-
-At any given point, there are at most $1/a_n$ intervals. 
-\newpage 
-
-\section{Starting Anew}
-
-\begin{defn} [Original Process]
-	Let $\{x_t\}$ be the Markov chain where $x_0 = (1, 0, \ldots, 0) \in \RR^n$. We have a Poisson clock of rate $1$. Everytime this clock rings, we pick $Q$ random coordinates to average. 
-\end{defn}
-
-\begin{defn} [Fragmentation Process]
-	Let $\{\overline{x}_t\}$ be the Markov chain where $\overline{x}_0 = (1, 0 \ldots, 0) \in \RR^n$. It evolves in the same way as $\{x_t\}$ except when we average at least two positive coordinates, we throw away all of the coordinates. Moreover, when intervals become smaller than $a_n$, we also throw them away. This is a fragmentation process version of the original process where we throw out piles which become too small. 
-\end{defn}
-
-\begin{defn} [Branching Process]
-	Let $I_t$ be a Markov chain where $I_0 = [0, 1]$. Each $I_t$ will consist of a collection of intervals which partition $[0, 1]$. To each interval of $I_t$, we attach a clock of rate $\mu / n$ and when it rings we split that interval up into a random number of equal parts according to the law of $Q'$ with distibution $(2q_2 / \mu, \ldots, Nq_N /\mu)$.
-\end{defn}
-
-(describe the coupling?) there are floating labels on the intervals, and when an averaging happens, the labels change. The is the valid coupling. We can couple $I_t$ and $\overline{x}_t$ in a way such that at time $t$, when $\overline{x}_{t, i} \neq 0$, there exists some $\pi_t(i)$ such that $\overline{x}_{t, i} = |I_{\pi_t(i)}|$ where $I_{\pi_t(i)} \in I_t$ and when $i \neq j$ we have $\pi_t(i) \neq \pi_t(j)$. We couple the processes $\{x_t\}$ and $\{\overline{x}_t\}$ such that the same averagings happen to both of them. To the fragmentation process, there is an interval interpretation. For $x \in [0, 1]$, consider $I_t^x$, the interval containing $x$. From now on, let $t := \gamma n ( \log n - (\log n)^{3/4})$. Define 
-\begin{align*}
-	a_n & = n^{-1 + a(n)} \\
-	b_n & = n^{-1 + b(n)} \\
-	a(n) & = \frac{1}{2} (\log n)^{-1/4} \\
-	b(n) & = 2 (\log n)^{-1/4}.
-\end{align*}
-
-Let $t := \gamma n (\log n - (\log n)^{3/4})$. 
-\begin{lem}
+Moreover, by time $t$, the piles which satisfy $\overline{x}_{t, i} \in (a_n, b_n)$ correspond to intervals whose lengths are in the same range. For the rest of the paper, our goal will be to prove Theorem~\ref{main-theorem}. The first step in this journey will be to prove Lemma~\ref{first-approximation} which says that at time $t$ the processes $\msP$ and $\FRAG$ are close in $L^1$. 
+\begin{lem} \label{first-approximation}
 	$\norm{x_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ almost surely. 
 \end{lem}
 
 \begin{proof}
-	Clearly $x_{t, i} > \overline{x}_{t, i}$ for all coordinates $1 \leq i \leq n$ because $\overline{x}_{t}$ is the same process as $x_t$ except we throw out piles when they become too small or throw them out when we average at least two positive piles. The statement $\norm{x_t - \overline{x}_t}_1 \to 0$ then states that the amount we throw out in the process $\overline{x}_t$ is $o(1)$. The only way we throw out things is if we average at least two positive piles or we split up a pile into piles which are too small. In the latter case, the process $I_t$ is the process $\overline{x}_t$ if we condition on the event that we never average two positive piles and we don't throw away the small piles. Hence the total length of the intervals in $I_t$ that are smaller than $a_n$ will be greater than the amount of intervals we throw away in $\overline{x}_t$ due to being too small. By Lemma (???), this length is $o(1)$ almost surely. Thus, it suffices to prove that the total length removed by averaging at least two positive piles is $o(1)$. Let $D_t$ be the total length removed by averaging at least two positive intervals at time $t$. By linearity of expectation, we have that 
+	Since $\msP$ and $\FRAG$ are coupled so that the exact same averagings happen and $\FRAG$ has the potential to lose mass in each averaging, we have that $x_{t, i} > \overline{x}_{t, i}$ for all coordinates $i$, $1 \leq i \leq n$. The value $\norm{x_t - \overline{x}_t}_1$ is simply the amount of mass we throw out up to time $t$. The only ways we can throw out mass is if we average multiple positive piles together or we split up a pile into piles which are too small. In the latter case, due to the coupling between $\FRAG$ and $\BRANCH$, the mass thrown out in this way will be dominated by the lengths of the intervals not in $(a_n, b_n)$. Thus, the total mass thrown out in this way will be $o(1)$ almost surely from Lemma~\ref{first-approximation}. Thus, it suffices to prove that the total length removed by averaging multiple positive piles is $o(1)$ almost surely. Let $D_t$ be the total length removed by averaging multiple positive piles by time $t$. Linearity of expectation will give us the equation
 	\[
-		\EE [ D_{t + \Delta} - D_t | \text{ one ring } ] = \EE \sum_i \overline{x}_{t, i} \cdot p_{i}. 
+		\EE [ D_{t + \Delta} - D_t | \mcF_t \text{ and one ring in $(t, t + \Delta)$ } ] = \EE \left ( \sum_i \overline{x}_{t, i} \cdot p_{i} | \mcF_t \right )
 	\]
-	where $p_{ij}$ is the probability we pick $i$ and some $j$ such that $\overline{x}_{t, j} \neq 0$. We can bound $p_i$ by above by coupling with the process where at each averaging we pick $N$ positions to average since this will increase the probability that we average $\overline{x}_{t, i}$ with a positive entry. There are at most $1/a_n$ positive piles. The probability that we pick $\overline{x}_{t, i}$ in an avering is then $N / n$. The probability that we pick $\overline{x}_{t, i}$ and no other positive pile is at least $\frac{\binom{n - 1/a_n}{N-1}}{\binom{n}{N}}$. Thus, we have that
+	where $p_{ij}$ is the probability we pick $i$ and some other $j$ such that $\overline{x}_{t, j} \neq 0$. Now consider the process where we average exactly $N$ elements in each ring. The probability in this case that we pick $i$ and some other $j$ such that $\overline{x}_{t, j} \neq 0$ will be at least $p_{ij}$ since bigger averages will only increase this probability. In this sense, the $N$-averaging-restricted process dominates the original one. The probability that we pick $\overline{x}_{t, i}$ in an averaging is then $N / n$. The probability that we pick $\overline{x}_{t, i}$ and no other positive pile is at least $\frac{\binom{n - 1/a_n}{N-1}}{\binom{n}{N}}$ since there are at most $1/a_n$ positive piles. Thus, we have that
 	\begin{align*}
-		p_i \leq \frac{N}{n} - \frac{\binom{n-1/a_n}{N-1}}{\binom{n}{N}} & \leq \frac{N}{n} - N \cdot \frac{(n-1/a_n)^{N-1}}{(n-N+1)^N} \\
-		& \leq N \left ( \frac{(n-N+1)^N - n(n-1/a_n)^{N-1}}{n(n-N+1)^N} \right ) \\
-		& \leq \frac{N}{(n-N+1)^{N+1}} \cdot (1/a_n - N + 1) \cdot (n-N+1)^{N-1}
+		p_i \leq \frac{N}{n} - \frac{\binom{n-1/a_n}{N-1}}{\binom{n}{N}} & \leq \frac{N}{n} - N \cdot \frac{(n-1/a_n)^{N-1}}{(n-N+1)^N} \leq N \left ( \frac{(n-N+1)^N - (n-1/a_n)^N}{n(n-N+1)^N} \right ). 
 	\end{align*}
-	where the last inequality follows from the mean value theorem. Thus, we have
+	We then apply the Mean Value Theorem in the form
 	\[
-		p_i \leq \frac{N}{a_n (n-N+1)^2} \leq \frac{C}{a_n n^2}.
+		\frac{(n-N+1)^N - (n-1/a_n)^N}{(n-N+1) - (n-1/a_n)} = N \cdot t^{N-1} \leq N (n-N+1)^{N-1}
+	\]
+	where $t \in (n-1/a_n, n-N+1)$. Thus, we have
+	\[
+		p_i \leq \frac{N^2}{(n-N+1)^{N+1}} \cdot (1/a_n - N + 1) \cdot (n-N+1)^{N-1} \leq \frac{N^2}{a_n (n-N+1)^2} \leq \frac{C}{a_n n^2}.
 	\]
 	for some universal constant $C$ depending on $N$. This gives us 
 	\[
-		\EE [D_{t + \Delta} - D_t | \text{ one ring }] \leq \frac{C}{a_n n^2} \cdot \EE \sum_i \overline{x}_{t, i} \leq \frac{C}{a_n n^2}.
+		\EE [ D_{t + \Delta} - D_t | \mcF_t \text{ and one ring in $(t, t + \Delta)$ } ] \leq \frac{C}{a_n n^2} \cdot \sum_i \overline{x}_{t, i} \leq \frac{C}{a_n n^2}.
 	\]
 	Between $0$ and $t$, we are expected to have $t$ rings. Hence, we have 
 	\[
-		\EE [D_t] \leq \frac{C \gamma n \log n}{a_n n^2} = O \left ( \frac{\log n}{a_n n} \right ) = O \left ( \log n \cdot n^{- (\log n)^{-1/4}} \right ) = o(1). 
+		\EE [D_t] \leq \frac{C \gamma n \log n}{a_n n^2} = O \left ( \frac{\log n}{a_n n} \right ) = O \left ( \log n \cdot n^{- \frac{1}{2}(\log n)^{-1/4}} \right ) = o(1). 
 	\]
 	Thus $D_t \to 0$ almost surely and $\norm{x_t - \overline{x_t}} = D_t + o(1) \to 0$ almost surely. This proves the lemma. 
 \end{proof}
 
-\begin{lem}
+We now prove Lemma~\ref{frag-branch-close} which states the total mass in piles of size in $(a_n, b_n)$ is well-approximated by the total length of intervals of similar length. 
+\begin{lem} \label{frag-branch-close}
 	We have that
 	\[
-		\left | \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} - \sum_{I \in I_t} |I| \cdot \1_{I \in (a_n, b_n)} \right | \to 0. 
+		\left | \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} - \sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \right | \to 0. 
 	\]
 	almost surely. 
 \end{lem}	
 \begin{proof}
-	For the piles $\overline{x}_{t, i} \neq 0$, there is an injection into $I_t$ into intervals of equal length. The other intervals correspond to $\overline{x}_{t, i} = 0$ intervals, but these intervals have been averaged with positive piles. But the total length of these intervals is dominated by $\norm{x_t - \overline{x}_t}_1$ which we proved to be $o(1)$. Hence, we have that
+	From our coupling, it is clear that all piles satisfying $\overline{x}_{t, i} \neq 0$ is associated with a unique interval in $I_t$ at time $t$. Moreover, this associated interval has length equal to the mass in the pile. This proves that 
 	\[
-		\left | \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} - \sum_{t \in I_t} |I| \cdot \1_{I \in (a_n, b_n)} \right | \leq \norm{x_t - \bar{x}_t}_1 = o(1). 
+		\sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} \leq \sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)}.
+	\] 
+	The only reason why the right sum is larger than the left are the intervals $I \in I_t$ whose length lies in $|I| \in (a_n, b_n)$ but there is no pile associated to it. Since $|I| > a_n$, this implies that it must have lost its associated label via multiple positive piles being averaged together. Thus the length in $|I|$ is included in the mass we throw out in $\FRAG$. But this mass is $o(1)$ almost surely from Lemma~\ref{first-approximation}. This proves the other bound
+	\[
+		\sum_{t \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \leq \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} + o(1) 
 	\]
-	This proves the lemma. 
+	and suffices for the proof of the lemma. 
 \end{proof}
+
+We currently have enough to prove one side of Theorem~\ref{main-theorem}.
 
 \begin{prop}
 	$T(t) \to 2$ almost surely as $n \to \infty$. 
 \end{prop}
 \begin{proof}
-	We can write
+	We can bound
 	\[
 		T(t) = 2 \sum_{i = 1}^n \left ( x_{t, i} - \frac{1}{n} \right )^+ \geq 2 \sum_{i = 1}^n \left ( \overline{x}_{t, i} - \frac{1}{n} \right )^+
 	\]
 	since $x_t$ is greater than $\overline{x}_t$ coordinate-wise. We can simplify the expression on the right hand side as
 	\begin{align*}
 		2 \sum_{i = 1}^n \left ( \overline{x}_{t, i} - \frac{1}{n} \right )^+ & \geq 2 \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{x_{t, i} \in (a_n, b_n)} - \frac{2}{n} | \{ i \in [n] : \overline{x_{t, i}} > 0\} \\
-		& \geq 2 \sum_{I \in I_t}^n |I| \cdot \1_{I \in (a_n, b_n)} - \frac{2}{n a_n} + o(1) \\
+		& \geq 2 \sum_{I \in I_t}^n |I| \cdot \1_{|I| \in (a_n, b_n)} - \frac{2}{n a_n} + o(1) \\
 		& \geq 2 - o(1).
 	\end{align*}
 	This proves the proposition. 
 \end{proof}
 
+To prove the other side of Theorem~\ref{main-theorem}, we want to run our original process starting from a ``smoothed'' version of the point $\overline{x}_t$. The $L^2$ bound on this new process will be more effective than if we were to use it on the original process. 
 \begin{defn}
 	Consider the process $\widehat{x}$ starting at time $t$ with initial condition
 	\[
-		\widehat{x}_{t, i} = \overline{x}_{t, i} \cdot \1_{x_{t, i} \in (a_n, b_n)} + \frac{1}{n} \left ( 1 - \sum_{i \in \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \right ).
+		\widehat{x}_{t, i} = \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} + \frac{1}{n} \left ( 1 - \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \right ).
 	\]
-	In particular, we have that $\norm{\widehat{x}_t} = 1$. Let $\widehat{x}$ evolve according to the same averages as $x$. 
+	In particular, we have that $\norm{\widehat{x}_t}_1 = 1$. Let $\widehat{x}$ evolve according to the same averages as $x$. 
 \end{defn}
 
 \begin{lem}
 	$\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ almost surely. 
 \end{lem}
 \begin{proof}
-	When $\overline{x}_{t, i} \in (a_n, b_n)$, then we have that
+	Whenever $\overline{x}_{t, i} \in (a_n, b_n)$, we have the bound
 	\[
 		|\overline{x}_{t, i} - \widehat{x}_{t, i}| = \frac{1 - z}{n}
 	\]
-	where $z := \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \to 1$ almost surely as $n \to \infty$. When $\overline{x}_{t, i} \not\in (a_n, b_n)$, the n
+	where $z := \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \to 1$ almost surely as $n \to \infty$. When $\overline{x}_{t, i} \not\in (a_n, b_n)$, then we can bound
 	\[
 		| \overline{x}_{t,i} - \widehat{x}_{t, i}| \leq \overline{x}_{t, i} + \frac{1-z}{n}.
 	\]
-	Thus, we have that
-	\[
-		\norm{\widehat{x}_t - \overline{x}_t}_1 \leq n \cdot \frac{1-z}{n} + \sum_{i : \overline{x}_{t, i} \not\in (a_n, b_n)} \overline{x}_{t, i} \leq (1-z) + (1 - z) = 2(1-z).
-	\]
-	As $n \to \infty$, we have $z \to 1$ and hence $\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as desired. 
+	Adding these estimates together, we have that
+	\begin{align*}
+		\norm{\widehat{x}_t - \overline{x}_t}_1 & \leq n \cdot \frac{1-z}{n} + \sum_{i : \overline{x}_{t, i} \not\in (a_n, b_n)} \overline{x}_{t, i} \\
+		& \leq (1-z) + (1 - z) \\
+		& = 2(1-z).
+	\end{align*}
+	As $n \to \infty$, we have $z \to 1$ almost surely. Hence, $\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as desired. 
 \end{proof}
 \begin{lem}
-	$\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2 \leq \frac{2b_n^2}{a_n}$ for sufficiently large $n$. 	
+	$\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2 \leq \frac{2b_n^2}{a_n}$ for sufficiently large $n$ where $\1$ is the uniform vector of $1$'s.
 \end{lem}
 
 \begin{proof}
 	We have that 
 	\begin{align*}
-		\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2 & \leq \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \left ( \overline{x}_{t, i} - \frac{z}{n} \right )^2 + \frac{1}{n}
+		\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2 & \leq \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \left ( \overline{x}_{t, i} - \frac{z}{n} \right )^2 + \sum_{i : \overline{x}_{t, i} \notin (a_n, b_n)} \frac{z^2}{n^2} \leq \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i}^2 + \frac{1}{n}
 	\end{align*}
-	where $z$ is the quantity
-	\[
-		z = \sum_{i \in \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \in [0, 1].
-	\]
+	where $z$ is the quantity $z = \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i}$ and $z \in [0, 1]$. 
 	Thus, we can bound 
 	\[
 		\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2	\leq \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \left ( \overline{x}_{t, i} \right )^2 + \frac{1}{n} \leq \frac{b_n^2}{a_n} + \frac{1}{n}.
 	\]
-	It is easily checked that $b_n^2 / a_n >> 1/n$, so for sufficiently large $n$ we have the desired bound. 
+	Our choices for $a_n$ and $b_n$ guarentee that $b_n^2 / a_n \gg 1/n$. Thus, for sufficiently large $n$, we get the desired bound.
 \end{proof}
 
 \begin{lem}
 	For any $s > 0$, we have that $\norm{x_{t+s} - \widehat{x}_{t+s}}_1 \leq \norm{x_t - \widehat{x}_t}_1$. 
 \end{lem}
 \begin{proof}
-	It suffices to prove that given two initial vectors $x_0, y_0 \in [0, 1]^n$ with $\norm{x_0}_1 =\norm{y}_1 = 1$ and $x_1, y_1$ the vectors after performing the same averaging on $x_0, y_0$ respectively, then $\norm{x_1 - y_1}_1 \leq \norm{x_0 - y_0}_1$. By considering $z_0 = x_0 - y_0$ and $z_1 = x_1 - y_1$, it suffices to prove that if the average coordinates of $z_0$ is $0$ and $z_1$ is the result of averaging some of the coordinates of $z_0$, then $\norm{z_1}_1 \leq \norm{z_0}_1$. Suppose we averaged the values $u_1, \ldots, u_k$. Then, we have that
+	It suffices to prove that given two initial vectors $x_0, y_0 \in [0, 1]^n$ with $\norm{x_0}_1 =\norm{y_0}_1 = 1$, then $\norm{x_1 - y_1}_1 \leq \norm{x_0 - y_0}_1$ where  $x_1, y_1$ are the vectors after performing the same averaging on $x_0, y_0$ respectively. Now, consider the vectors $z_0 = x_0 - y_0$ and $z_1 = x_1 - y_1$. It suffices to prove that if the average of the coordinates of $z_0$ is $0$ and $z_1$ is the result of averaging some of the coordinates of $z_0$, then $\norm{z_1}_1 \leq \norm{z_0}_1$. To prove this, suppose that we averaged the values $u_1, \ldots, u_k$. Then,
 	\[
-		k \cdot \left | \frac{u_1 + \ldots + u_k}{k} \right | = |u_1 + \ldots + u_k| \leq |u_1| + \ldots + |u_k|.
+		k \cdot \left | \frac{u_1 + \ldots + u_k}{k} \right | = |u_1 + \ldots + u_k| \leq |u_1| + \ldots + |u_k|
 	\]
-	This proves the lemma. 
-\end{proof}
+	which proves that the $L^1$ distance decreases. This suffices for the proof. 
+	\end{proof}
 
-Now let $\Omega > 0$ be a constant which is larger than both $2\gamma$ and $7 / 2(\mu - 1)$. Let $s = \Omega (n-1) (\log n)^{3/4}$. Then, we have the following lemma. 
+Now let $\Omega = \max \left \{\gamma, \frac{7}{2(\mu -1)} \right \} + 1$ be a universal constant. We define $s := \Omega (n-1) (\log n)^{3/4}$. Then, we have the following lemma. 
 
 \begin{lem}
 	$T(s+t) \to 0$ as $n \to \infty$ almost surely. 
 \end{lem}
 
 \begin{proof}
-	Let $T', S'$ be the $L^1$ and $L^2$ distances of the process $\widehat{x}$. From Lemma (???), we have that
+	Let $T', S'$ be the $L^1$ and $L^2$ distances of the process $\widehat{x}$. From Lemma~\ref{explicit-formula-continuous-YESYES}, we have that
 	\begin{align*}
-		S'(t+s) & = \exp \left ( - \frac{s (\mu-1)}{(n-1)} \right ) S'(s) \\
+		S'(t+s) & = \exp \left ( - \frac{s (\mu-1)}{(n-1)} \right ) S'(t) \\
 		& \leq \exp(- \Omega (\mu-1) (\log n)^{3/4}) \cdot \frac{2b_n^2}{a_n} \\
 		& = 2 \exp \left ( \left \{ \frac{7}{2} - \Omega (\mu - 1) \right \} (\log n)^{3/4} \right ) \cdot \frac{1}{n}.
 	\end{align*}
@@ -494,6 +475,31 @@ Now let $\Omega > 0$ be a constant which is larger than both $2\gamma$ and $7 / 
 	\end{align*}
 	This proves the lemma. 
 \end{proof}
+
+Note that there is a $\varepsilon > 0$ sufficiently small such that $(\Omega - \varepsilon - \gamma) > 0$. In particular, for sufficiently large $n$, we have 
+\[
+	s + t \geq \gamma n \log n + (\Omega - \gamma - \varepsilon) n (\log n)^{3/4}.
+\]
+Thus, we can slightly weaken our current results to get a succint formulation in Theorem~\ref{main-theorem}. 
+
+\begin{thm} \label{main-theorem}
+	Let $t = \theta n \log n$ for some $\theta > 0$. Then, the following are true:
+	\begin{enumerate}[label = (\alph*)]
+		\item If $\theta < \gamma$, then $T(t) \to 2$ almost surely. 
+		\item If $\theta > \gamma$, then $T(t) \to 0$ almost surely. 
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	Both results follow from Theorem~\ref{main-theorem} and the monotonicity of $T$ and $S$
+\end{proof}
+
+In particular, we have proven that $\gamma n \log n$ is a cutoff time for the $L^1$ distance where $\gamma = 1/\EE[Q \log Q]$.
+
+\section{Future Work} 
+
+\section*{Acknowledgements}
+
 \bibliographystyle{plain}
 \bibliography{ref}
 \end{document}

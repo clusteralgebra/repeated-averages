@@ -1,7 +1,7 @@
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
-\contentsline {section}{\numberline {2}Deterministic Generalized Averages}{3}{section.2}%
-\contentsline {section}{\numberline {3}Random Bounded Averages}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Logarithmic Length of the Interval Trajectory}{7}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Trying Random Stuff}{9}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}New Process}{9}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Starting Anew}{10}{section.4}%
+\contentsline {section}{\numberline {2}Random Bounded Averages}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Explicit Formulae for the Squared Distance to Mean}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Coupling with Fragmentation and Branching Processes}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Logarithmic Length of Interval Trajectories}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Proof of Theorem\nobreakspace {}\ref {main-theorem}}{9}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Future Work}{14}{section.3}%
