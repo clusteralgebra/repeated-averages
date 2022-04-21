@@ -1,11 +1,15 @@
 \documentclass[12pt]{article}
 \usepackage{../../style}
 \usepackage[margin=0.75in]{geometry}
-\title{Random Iterated Averages}
-\author{Alan Yan \\ Project Advisor: Professor Allan Sly}
+\title{Cutoff for Random Iterated Averages}
+\author{Alan Yan \\ Junior Paper Advisor: Professor Allan Sly}
 \begin{document}
 
 \maketitle
+
+\begin{abstract}
+	In this paper, we consider a generalization of the iterated averages Markov chain defined in \cite{chatterjee2021phase}. Instead of restricting to binary averages, we allow for random, but bounded, averages at each step. In particular, we prove Theorem~\ref{main-theorem} which gives cutoff for the $L^1$ distance.  
+\end{abstract}
 \tableofcontents
 
 \newpage 
@@ -78,7 +82,7 @@ Then, \cite{chatterjee2021phase} focuses on the proof of Theorem~\ref{main-theor
 \end{thm}
 
 \begin{prop}
-	Theorem~\ref{main-theorem} and Theorem~\ref{main-theorem-continuous} are equivalent. 
+	Theorem~\ref{main-theorem-old} and Theorem~\ref{main-theorem-continuous} are equivalent. 
 \end{prop}
 \begin{proof}
 	TODO
@@ -203,8 +207,8 @@ We recall the definition of our original process for the random bounded averages
 	Let $\mathsf{P} := \{x_t\}$ be the Markov chain where $x_0 = (1, 0, \ldots, 0) \in \RR^n$. We have a Poisson clock of rate $1$. Everytime this clock rings, we pick some random coordinates to average where the random number is sampled randomly from $Q$. 
 \end{defn}
 
-\begin{defn} [Fragmentation Process]
-	Let $\mathsf{P}_{\mathsf{FRAG}} := \{\overline{x}_t\}$ be the Markov chain where $\overline{x}_0 = (1, 0 \ldots, 0) \in \RR^n$. It evolves in the same way as $\{x_t\}$ except when we average at least two positive coordinates, we throw away all of the coordinates. Moreover, when intervals become smaller than $a_n$, we also throw them away. This is a fragmentation process version of the original process where we throw out piles which become too small. 
+\begin{defn} [Fragmentation Process] \label{fragmentation-definition}
+	Let $\mathsf{P}_{\mathsf{FRAG}} := \{\overline{x}_t\}$ be the Markov chain where $\overline{x}_0 = (1, 0 \ldots, 0) \in \RR^n$. It evolves in the same way as $\{x_t\}$ except when we average at least two positive coordinates, we throw away all of the coordinates. Moreover, when intervals become smaller than $a_n$, we also throw them away. There are also other moments when we throw away coordinates according to the coupling with Definition~\ref{branching-definition} which we define later. This is a fragmentation process version of the original process where we throw out piles which become too small. 
 \end{defn}
 
 \begin{defn} [Branching Process] \label{branching-definition}
@@ -214,17 +218,32 @@ We recall the definition of our original process for the random bounded averages
 We now describe how we couple the processes $\msP$, $\FRAG$, and $\BRANCH$ so that $\FRAG$ acts as an approximation of $\msP$, and $\BRANCH$ is an approximation of $\FRAG$ where our approximations are fine enough to conclude information about the $L^1$ convergence. 
 
 \begin{quote}
-	We couple $\msP$ and $\FRAG$ in the obvious way: whenever we average some piles on $\msP$, we average the same exact piles in $\FRAG$ while keeping the averaging rules consistent in each process. The coupling between $\FRAG$ and $\BRANCH$ is a bit more complicated. In order to couple the two processes, we attach to each interval set $I_t$ a labelling function $\pi_t : I_t \to [n] \cup \{0\}$ which assigns labels to intervals. The labelling function will always be injective on the intervals which are not given the label $0$. Morally, if $I \in I_t$ satisfies $\pi_t(I) = k$ for some $k \in [n]$, the interval $I$ ``represents'' the interval $k$ and will satisfy $|I| = \overline{x}_{t, k}$. To see how this labelling function evolves, we first initialize $\pi_0([0, 1]) = 1$. This reflects the initial vector $(1, 0, \ldots, 0)$ since the whole interval represents the first pile and the other piles are assigned. Consider the sequence of averagings in $\overline{x}_t$ which we can say occur at times $t_1 < t_2 < \ldots$ since the times occur at a discrete set of points almost surely. We initially remove all of the clocks from all of the intervals. Now, suppose we are at time $t_i$ awaiting the evolution of our process $I_t$. If at time $t_{i+1}$, a positive pile is averaged with only zero piles, we take the interval corresponding to this positive pile and split it into equal pieces while assigning the piles we averaged to the equal pieces in a one-to-one manner. If at time $t_{i+1}$, we average at least two positive piles together, then we split each of the intervals corresponding to the positive piles into the correct number of equal pieces, remove the labels of the intervals corresponding to these piles, and attach Poisson clocks of rate $\mu / n$ to each of them such that when it rings we split it into equal pieces based on the law of $Q'$. We also let the other intervals currently with clocks evolve naturally. To prove that this forms a valid coupling, it suffices to prove that the marginal law of $\BRANCH$ is as described in Definition~\ref{branching-definition}. To see this, we require to go back to our original process $\{x_t\}$. We can split our Poisson clock of rate $1$ into separate independent Poisson clocks $C_2, \ldots, C_N$ where $C_k$ is a Poisson clock of rate $q_k$. When $C_k$ rings, we pick $k$ distinct coordinates uniformly and random and replace them by their average. If we fix a pile in $\{\overline{x}_{t, i}\}$ the probability that it gets picked to get averaged when $C_k$ rings is $\frac{k}{n}$. In particular, if $C_k$ rings, the probability that the corresponding interval in $I_t$ gets split into $k$ parts is also $\frac{k}{n}$. This is also true of intervals which are not associated with any pile in $\overline{x}_t$ by construction. Hence, every interval has a clock of rate $\frac{kq_k}{n}$ for all $k$ which dictates when that interval should shatter into $k$ equal pieces. By amalgmating all these clocks, we can equivalently view each interval having a clock of rate $\sum_{k = 2}^N q_k \frac{k}{n} = \mu / n$ where whenever it rings, the probability we split the interval into $k$ parts is 
+	We couple $\msP$ and $\FRAG$ in the obvious way: whenever we average some piles on $\msP$, we average the same exact piles in $\FRAG$ while keeping the removal rules consistent. The coupling between $\FRAG$ and $\BRANCH$ is a bit more complicated. In order to couple the two processes, we attach to each interval set $I_t$ a labelling function $\pi_t : I_t \to [n] \cup \{0\}$ which assigns labels to intervals. The labelling function will always be injective on the intervals which are not given the label $0$. If $I \in I_t$ satisfies $\pi_t(I) = k$ for some $k \in [n]$, the interval $I$ ``represents'' the interval $k$ and will satisfy $|I| = \overline{x}_{t, k}$. The coupling between $\FRAG$ and $\BRANCH$ will also describe how the labelling function $\pi_t$ evolves. At time $t$, let $A_t := \{i \in [n] : \overline{x}_{t, i} > 0\}$ be the labels of the piles which are non-zero. For each interval $I \in I_t$ and subset $S \subseteq [n]$ of $k-1$ elements, where $k$ ranges from $2$ to $N$, we can define an independent Poisson clock $N_{I, S}$ of rate $q_k \binom{n}{k}^{-1}$ which dictates $I$ to split into $k$ equal parts. Then to the interval $I$, we can attach the Poisson clock
 	\[
-		\frac{q_k \cdot (k/n)}{\mu / n} = \frac{kq_k}{\mu}.
+		N_I = \begin{cases}
+			\sum_{k = 2}^N \sum_{S \in \binom{[n]}{k-1} : \pi_t(I) \cap S = \emptyset} N_{I, S} & \text{ when $\pi_t(I) \neq 0$} \\
+			\sum_{k = 2}^N \sum_{S \in \binom{[n-1]}{k-1}} N_{I, S} & \text{ when $\pi_t(I) = 0$}.
+		\end{cases}
 	\]
-	This proves the coupling is a valid coupling. 
+	We want $I$ to evolve as described in Definition~\ref{branching-definition}. Thus, in the case $\pi_t(I) \neq 0$, we need one clock for every possible average combinations which include the pile corresponding to $I$. In the csae of $\pi_t(I) = 0$, it doesn't matter which clocks we associated (as long as they have the correct weights) since the interval is not associated to any pile. Attached to $\overline{x}_t$, for every $S \subseteq [n]$ with $|S| = k \in \{2, \ldots, N\}$ we have a clock $\overline{N}_S$ of rate $q_k \binom{n}{k}^{-1}$. When the clock $\overline{N}_S$ rings, we perform an averaging on the coordinates $S$ on $\overline{x}_t$. This is also the same clock used in $\msP$. We now construct the following coupling: if $S' = x \sqcup S$ where $|S| = k-1$ and $\bar{x}_{t, x} \neq 0$ while $\overline{x}_{t,s} = 0$ for all $s \in S$, then we couple $\overline{N}_{S'}$ with $N_{\pi_t^{-1}(x), S}$ where $\pi_t^{-1}(x)$ is the interval which is associated to the pile $x$. The only problem is that there may be times where an interval $I$ is associated some label $\pi_t(I) = x$ and $S \subseteq [n] \backslash x$ has some non-zero piles and $N_{I, S}$ rings but the corresponding averging $\overline{N}_{x \cup S}$ does not happen. In this case, we set all coordinates of $\overline{x}_t$ in positions $x \cup S$ to zero. This is the extra removal mentioned in Definition~\ref{fragmentation-definition}. \\
+
+	We now describe how the labelling function evolves. Whenever we perform a removal in $\overline{x}_t$, the corresponding labels are removed. Whenever we perform a valid averaging, we redistribute the labels in any suitable way. For example, we can redistribute them in increasing order from left to right. In this way, the interval and pile pairs always have the same length. \\
+
+	To prove that this coupling is valid, we need to prove that the marginal distributions are correct. By construction, in Definition~\ref{fragmentation-definition}, we defined the marginal distribution to be the one dictated by the averging in $\msP$ alongside the addition removal in $\BRANCH$. Thus, by definition, the marginal distribution is correct. Now, we need to prove that the martingale distribution in $\BRANCH$ is correct. But this is clear by looking at an individual interval. Suppose the interval is labelled by some pile. For any $k \in \{2, \ldots, N\}$, we have the following clocks for $I$ which dictate $I$ to split into $k$ equal parts:
+	\[
+		\left \{ N_{I, S} : S \subseteq \binom{[n] \backslash \pi_t(I)}{k-1}\right \}.
+	\]
+	There are $\binom{n-1}{k-1}$ such clocks each of rate $q_k \binom{n}{k}^{-1}$. This is equivalent to saying that $I$ has one clock of rate
+	\[
+		\frac{\binom{n-1}{k-1}}{\binom{n}{k}} q_k = \frac{kq_k}{n}
+	\]
+	which dictates when the interval splits into $k$ equal parts. The analysis for the case where $I$ is not labelled is exactly the same, if not even simpler. Thus, the marginal distributions are correct and the coupling is valid. 
 \end{quote}
 From now on, let $t := \gamma n ( \log n - (\log n)^{3/4})$ and $\gamma = (\EE[Q \log Q])^{-1}$. Define the constants
 \begin{align*}
 	a_n := n^{-1 + \alpha(n)}, b_n := n^{-1 + \beta(n)},  \alpha(n) := \frac{1}{2} (\log n)^{-1/4}, \text{ and } \beta(n) := 2 (\log n)^{-1/4}.
 \end{align*}
-In particular, the constants where chosen that $\frac{1}{n} \ll a_n < b_n = n^{-1 + o(1)}$. 
+In particular, the constants are chosen so that $n^{-1} \ll a_n < b_n = n^{-1 + o(1)}$. 
 
 \subsection{Logarithmic Length of Interval Trajectories}
 In this section, we analyze the distribution of $|I_t^x|$ for any fixed $x \in [0, 1]$ where $I_t^x$ is defined to be the (leftmost) interval in $I_t$ which contains $x$. We first prove the following well-known result in Lemma~\ref{poisson-concentration} about Poisson concentration. 
@@ -296,7 +315,7 @@ We now have all the tools needed to prove Theorem~\ref{main-theorem}.
 
 \subsection{Proof of Theorem~\ref{main-theorem}}
 
-\begin{prop}
+\begin{prop} \label{zero-approximation}
 	As $n \to \infty$, 
 	\[
 		\sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \to 1
@@ -326,11 +345,19 @@ Moreover, by time $t$, the piles which satisfy $\overline{x}_{t, i} \in (a_n, b_
 \end{lem}
 
 \begin{proof}
-	Since $\msP$ and $\FRAG$ are coupled so that the exact same averagings happen and $\FRAG$ has the potential to lose mass in each averaging, we have that $x_{t, i} > \overline{x}_{t, i}$ for all coordinates $i$, $1 \leq i \leq n$. The value $\norm{x_t - \overline{x}_t}_1$ is simply the amount of mass we throw out up to time $t$. The only ways we can throw out mass is if we average multiple positive piles together or we split up a pile into piles which are too small. In the latter case, due to the coupling between $\FRAG$ and $\BRANCH$, the mass thrown out in this way will be dominated by the lengths of the intervals not in $(a_n, b_n)$. Thus, the total mass thrown out in this way will be $o(1)$ almost surely from Lemma~\ref{first-approximation}. Thus, it suffices to prove that the total length removed by averaging multiple positive piles is $o(1)$ almost surely. Let $D_t$ be the total length removed by averaging multiple positive piles by time $t$. Linearity of expectation will give us the equation
+	Since $\msP$ and $\FRAG$ are coupled so that $\FRAG$ experiences the same averagings that $\msP$ experiences including a bit more removals from $\BRANCH$. Thus, we must have that $x_{t, i} > \overline{x}_{t, i}$ for all coordinates $i$, $1 \leq i \leq n$. The value $\norm{x_t - \overline{x}_t}_1$ is simply the amount of mass we remove by time $t$. There are three ways we can throw out mass:
+	\begin{enumerate}
+		\item[\textbf{(R1)}] We average a positive pile with only zero piles, but the pieces become too small. 
+
+		\item[\textbf{(R2)}] We average multiple positive piles together. 
+
+		\item[\textbf{(R3)}] We remove mass via the extra condition in the coupling with $\BRANCH$. 
+	\end{enumerate} 
+	First we consider mass removed because of (R1). Due to the coupling between $\FRAG$ and $\BRANCH$, the mass thrown out due to pieces being too small will be dominated by the sum of lengths of the intervals in $I_t$ which have length less than $a_n$. Thus, the total mass thrown out in this way will be $o(1)$ almost surely from Lemma~\ref{zero-approximation}. Now consider the mass removed because of (R2). Let $D_t$ be the total length removed by averaging multiple positive piles by time $t$. Linearity of expectation will give us
 	\[
 		\EE [ D_{t + \Delta} - D_t | \mcF_t \text{ and one ring in $(t, t + \Delta)$ } ] = \EE \left ( \sum_i \overline{x}_{t, i} \cdot p_{i} | \mcF_t \right )
 	\]
-	where $p_{ij}$ is the probability we pick $i$ and some other $j$ such that $\overline{x}_{t, j} \neq 0$. Now consider the process where we average exactly $N$ elements in each ring. The probability in this case that we pick $i$ and some other $j$ such that $\overline{x}_{t, j} \neq 0$ will be at least $p_{ij}$ since bigger averages will only increase this probability. In this sense, the $N$-averaging-restricted process dominates the original one. The probability that we pick $\overline{x}_{t, i}$ in an averaging is then $N / n$. The probability that we pick $\overline{x}_{t, i}$ and no other positive pile is at least $\frac{\binom{n - 1/a_n}{N-1}}{\binom{n}{N}}$ since there are at most $1/a_n$ positive piles. Thus, we have that
+	where $p_i$ is the probability we pick $i$ and some other $j$ such that $\overline{x}_{t, j} \neq 0$. Now consider the process where we average exactly $N$ elements in each ring. The probability in this case that we pick $i$ and some other $j$ such that $\overline{x}_{t, j} \neq 0$ will be at least $p_i$ since bigger averages will only increase this probability. In this sense, the $N$-averaging-restricted process dominates the original one. The probability that we pick $\overline{x}_{t, i}$ in an averaging is then $N / n$. The probability that we pick $\overline{x}_{t, i}$ and no other positive pile is at least $\frac{\binom{n - 1/a_n}{N-1}}{\binom{n}{N}}$ since there are at most $1/a_n$ positive piles. Thus, we have that
 	\begin{align*}
 		p_i \leq \frac{N}{n} - \frac{\binom{n-1/a_n}{N-1}}{\binom{n}{N}} & \leq \frac{N}{n} - N \cdot \frac{(n-1/a_n)^{N-1}}{(n-N+1)^N} \leq N \left ( \frac{(n-N+1)^N - (n-1/a_n)^N}{n(n-N+1)^N} \right ). 
 	\end{align*}
@@ -350,7 +377,7 @@ Moreover, by time $t$, the piles which satisfy $\overline{x}_{t, i} \in (a_n, b_
 	\[
 		\EE [D_t] \leq \frac{C \gamma n \log n}{a_n n^2} = O \left ( \frac{\log n}{a_n n} \right ) = O \left ( \log n \cdot n^{- \frac{1}{2}(\log n)^{-1/4}} \right ) = o(1). 
 	\]
-	Thus $D_t \to 0$ almost surely and $\norm{x_t - \overline{x_t}} = D_t + o(1) \to 0$ almost surely. This proves the lemma. 
+	Thus $D_t \to 0$ almost surely and $\norm{x_t - \overline{x_t}} = D_t + o(1) \to 0$ almost surely. This proves that the mass thrown out because of (R2) will be $o(1)$ almost surely. Finally, we consider the mass removed because of (R3). Note that this removal happens because there is some $I \in I_t$ with $s_1 = \pi_t(I)$ and $s_2, \ldots, s_k \in [n]$ such that at least one of the piles associated to $s_2, \ldots, s_k$ is positive and $N_{I, s_2, \ldots, s_k}$ rings but the $\overline{N}_{s_1, \ldots, s_k}$ does not. Note that the rate that this happens is the exact same as the rate that $\overline{N}_{s_1, \ldots, s_k}$ rings. There are at most $N$ clocks associated to a single $\overline{N}_{s_1, \ldots, s_k}$, so in the worst case if we want to bound the mass we remove, we can think of this amount being dominated by the amount we remove in (R2) if averagings were to happen $N+1$ times faster. This amount of mass removed is still $o(1)$ almost surely, which suffices for the proof. 
 \end{proof}
 
 We now prove Lemma~\ref{frag-branch-close} which states the total mass in piles of size in $(a_n, b_n)$ is well-approximated by the total length of intervals of similar length. 
@@ -366,7 +393,7 @@ We now prove Lemma~\ref{frag-branch-close} which states the total mass in piles 
 	\[
 		\sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} \leq \sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)}.
 	\] 
-	The only reason why the right sum is larger than the left are the intervals $I \in I_t$ whose length lies in $|I| \in (a_n, b_n)$ but there is no pile associated to it. Since $|I| > a_n$, this implies that it must have lost its associated label via multiple positive piles being averaged together. Thus the length in $|I|$ is included in the mass we throw out in $\FRAG$. But this mass is $o(1)$ almost surely from Lemma~\ref{first-approximation}. This proves the other bound
+	The only reason why the right sum is possibly larger than the left is because of the intervals $I \in I_t$ whose length lies in $|I| \in (a_n, b_n)$ but there is no pile associated to it. Since $|I| > a_n$, this implies that it must have lost its associated label via multiple positive piles being averaged together. Thus the length in $|I|$ is included in the mass we throw out in $\FRAG$. But this mass is $o(1)$ almost surely from Lemma~\ref{first-approximation}. This proves the other bound
 	\[
 		\sum_{t \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \leq \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} + o(1) 
 	\]
@@ -476,9 +503,9 @@ Now let $\Omega = \max \left \{\gamma, \frac{7}{2(\mu -1)} \right \} + 1$ be a u
 	This proves the lemma. 
 \end{proof}
 
-Note that there is a $\varepsilon > 0$ sufficiently small such that $(\Omega - \varepsilon - \gamma) > 0$. In particular, for sufficiently large $n$, we have 
+Note that for sufficiently large $n$, we have 
 \[
-	s + t \geq \gamma n \log n + (\Omega - \gamma - \varepsilon) n (\log n)^{3/4}.
+	s + t \leq \gamma n \left (\log n + (\Omega - \gamma) (\log n)^{3/4} \right ).
 \]
 Thus, we can slightly weaken our current results to get a succint formulation in Theorem~\ref{main-theorem}. 
 
@@ -498,8 +525,31 @@ In particular, we have proven that $\gamma n \log n$ is a cutoff time for the $L
 
 \section{Future Work} 
 
-\section*{Acknowledgements}
+There are still many open questions about the iterated averages Markov chain. 
 
+\subsection{Unbounded Random Averages}
+
+In this paper, one of the important assumptions was that the law of $Q$ was bounded. However, with some more careful analysis, this restriction can be removed and replaced with some other regularity assumption on $Q$. 
+
+\subsection{Maximum Decay over All Starting Points}
+Beyond the cutoff time, there are other problems we can consider about this Markov chain. In the problem considered in \cite{chatterjee2021phase}, an initial vector was picked first and the analysis was focused on the $L^1$ trajectory of this specific process. From here, it is proven in \cite{chatterjee2021phase} that the maximum $L^1$ cutoff over all initial starting points occurs when all of the mass is concentrated at a single pile. Instead, we can consider the reverse: consider a different process for each initial starting vector where the processes are evolving simulatenously via the same averagings. At time $t$, we can consider the maximum $L^1$ distance among all starting points. This should exhibit some cutoff time different than the cutoff time of the original $L^1$ distance.
+
+\subsection{Second Order Behavior of Random Averages}
+
+In \cite{chatterjee2021phase}, the second order behavior of the binary iterated averages Markov chain was completely understood. With slight changes to the current techniques, it should be possible to also understand the second order behavior of the random averages case. 
+
+\subsection{Stationary Distribution of Normalized Markov Chain}
+
+Alternatively, we may choose to abandon cutoff and instead consider a $L^1$ normalized version of our Markov chain. Suppose $n$ is not a power of two, and let $x_0$ be a vector whose average is $0$. Then any averaging or scalar multiple will preserve the zero average. We let the markov chain evolve as in the averaging case, except after every averaging we normalize the vector by $L^1$. Hence, the process is some trajectory in the intersection between a hyperplane and the $L^1$ ball. The final question in mind is about the existence of a stationary distribution of this Markov chain. 
+
+\section*{Acknowledgements}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+I would like to thank Professor Allan Sly for all of his guidance throughout this junior paper. My knowledge of probability and mathematics has grown immensely because of our weekly meetings. 
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{section}{References}
 \bibliographystyle{plain}
 \bibliography{ref}
 \end{document}

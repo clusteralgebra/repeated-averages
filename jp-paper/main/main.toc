@@ -2,6 +2,12 @@
 \contentsline {section}{\numberline {2}Random Bounded Averages}{3}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Explicit Formulae for the Squared Distance to Mean}{4}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Coupling with Fragmentation and Branching Processes}{6}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Logarithmic Length of Interval Trajectories}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.3}Logarithmic Length of Interval Trajectories}{8}{subsection.2.3}%
 \contentsline {subsection}{\numberline {2.4}Proof of Theorem\nobreakspace {}\ref {main-theorem}}{9}{subsection.2.4}%
 \contentsline {section}{\numberline {3}Future Work}{14}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Unbounded Random Averages}{14}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Maximum Decay over All Starting Points}{14}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Second Order Behavior of Random Averages}{15}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Stationary Distribution of Normalized Markov Chain}{15}{subsection.3.4}%
+\contentsline {section}{Acknowledgements}{15}{section*.2}%
+\contentsline {section}{References}{16}{section*.3}%
