@@ -21,12 +21,12 @@ In \cite{chatterjee2021phase}, Chatterjee, Diaconis, Sly, and Zhang analyze the 
 	Let $\msB = \{x_t\}_{t \in \ZZ_{\geq 0}}$ where $x_0 \in \RR$ is some initial vector in $\RR^n$. The vector $x_{k+1}$ is determined picking two distinct coordinates of $x_k$ uniformly at random and replacing both of them by their average. 
 \end{defn}
 
-The binary Markov chain in Definition~\ref{discrete-binary-markov-chain} traces a discrete trajectory on a $n-1$-dimensional hyperplane in $\RR^n$. As $t \to \infty$, the Markov chain will converge to the uniform vector of the average of the coordinates almost surely. In this paper, we will be interested in the rate of convergence to the average for generalizations of this Markov chain. Let the $x^\mu$ be the average value of the coordinates of $x_0$. Then, we consider two measurements of the distance from the average which correspond to the $L^1$ and $L^2$ distances. Following \cite{chatterjee2021phase}, we define the $T$ and $S$ functions explicitly as 
+The binary Markov chain in Definition~\ref{discrete-binary-markov-chain} traces a discrete trajectory on the hyperplane $\{x \in \RR^n : \langle x - x_0, \1 \rangle = 0\}$ in $\RR^n$ where $\1$ is the vector of all ones. As $t \to \infty$, the Markov chain will converge to the uniform vector of the average of the coordinates almost surely. In this paper, we will be interested in the rate of convergence to the average for generalizations of this Markov chain. Let the $x^\mu$ be the average value of the coordinates of $x_0$. Then, we consider two measurements of the distance from the average which correspond to the $L^1$ and $L^2$ distances. Following \cite{chatterjee2021phase}, we define the functions $T$ and $S$ as 
 \begin{align*}
-	T(k) & := \sum_{i = 1}^n |x_{k, i} - \ol{x}_0|, \quad S(k) := \sum_{i = 1}^n |x_{k, i} - \ol{x}_0|^2.
+	T(k) & := \sum_{i = 1}^n |x_{k, i} - x^\mu|, \quad S(k) := \sum_{i = 1}^n |x_{k, i} - x^\mu|^2.
 \end{align*}
 
-We are now interested in the rate of convergence and the existence of a cutoff time. In \cite{chatterjee2021phase}, an explicit formula for the expected $L^2$ distance was found and is given in Proposition~\ref{binary-explicit-l2}.
+Note that $T$ is defined using the $L^1$ norm exactly while $S$ is defined using the $L^2$ norm squared. We are now interested in the rate of convergence and the existence of a cutoff time. In \cite{chatterjee2021phase}, an explicit formula for the expected $L^2$ distance was found and is given in Proposition~\ref{binary-explicit-l2}.
 
 \begin{prop}[Proposition 2.1 in \cite{chatterjee2021phase}] \label{binary-explicit-l2}
 	For any $k \geq 0$, we have 
@@ -35,7 +35,26 @@ We are now interested in the rate of convergence and the existence of a cutoff t
 	\]	
 \end{prop}
 
-Propostion~\ref{binary-explicit-l2} implies that the $L^2$ norm decays exponentially. The main result \cite{chatterjee2021phase} was concerning the decay and cutoff of the $L^1$ norm. In particular, the main theorem in \cite{chatterjee2021phase} given in Theorem~\ref{main-theorem-old} finds the second order behavior of the $L^1$ distance. 
+In Proposition~\ref{binary-explicit-l2}, we let $\mcF_k$ be the sigma algebra which consists of all of the information up to time $k$. We keep this convention throughout the paper. From the formula in Propostion~\ref{binary-explicit-l2}, the behavior of the $L^2$ distance $S$ is well-understood. It also provides a way to prove the earlier result that the Markov chain converges to the average almost surely for fixed $n$. Before proving this fact, we first prove Lemma~\ref{easy-measure-theory-fact} which is an elementary fact from probability theory. 
+
+\begin{lem} \label{easy-measure-theory-fact}
+	Let $\{Z_n\}_{n \in \NN_0}$ be a sequence of decreasing non-negative random variables. If $\EE[Z_n] \to 0$, then $Z_n \to 0$ almost surely. 
+\end{lem}
+\begin{proof}
+	If $\EE[Z_n] \to 0$, then $Z_n \to 0$ in probability by Markov's inequality. From a standard argument, convergence in probability implies that there is a subsequence which converges almost surely. This limit point must evidently be $0$. Moreover, since the sequence is decreasing, this implies that the whole sequence must converge to $0$ almost surely. 
+\end{proof}
+
+\begin{prop}
+	For fixed $n$, we have that $x_k \to x^\mu \cdot \1$ almost surely as $k \to \infty$ where $\1$ is the vector of all ones. 
+\end{prop}
+\begin{proof}
+	The formula in Proposition~\ref{binary-explicit-l2}, we have that 
+	\[
+		\EE \left [ \norm{x_k - x^\mu \cdot \1}_2^2 \right ] = c \left ( 1 - \frac{1}{n-1} \right )^k 
+	\]
+	where $c > 0$ is some constant depending on $x_0$. Taking $k \to \infty$, we have $\EE [ \norm{x_k - x^\mu \cdot \1}_2^2 ] \to 0$. From Lemma~\ref{easy-measure-theory-fact} and that $S$ is monotonically decreasing we have proven the result.
+\end{proof}
+The main result \cite{chatterjee2021phase} was concerning the decay and cutoff of the $L^1$ norm. In particular, the main theorem in \cite{chatterjee2021phase} given in Theorem~\ref{main-theorem-old} finds the second order behavior of the $L^1$ distance. 
 
 \begin{thm}[Theorem 1.2 in \cite{chatterjee2021phase}] \label{main-theorem-old}
 	Let $\Phi : \RR \to [0, 1]$ be the cumulative distribution function of the standard normal distribution $N(0, 1)$. For $x_0 = (1, 0, \ldots, 0)$, and any $a \in \RR$, as $n \to \infty$ we have 
@@ -75,20 +94,13 @@ By giving each pair of coordinates an independent clock of rate $\binom{n}{2}^{-
 	This suffices for the proof. 
 \end{proof}
 
-Then, \cite{chatterjee2021phase} focuses on the proof of Theorem~\ref{main-theorem-continuous} as this a good enough approximation of Theorem~\ref{main-theorem-old} to imply it. 
+Then, \cite{chatterjee2021phase} focuses on the proof of Theorem~\ref{main-theorem-continuous}. 
 
 \begin{thm}[Theorem 2.3 in \cite{chatterjee2021phase}] \label{main-theorem-continuous}
 	Take $\Phi : \RR \to [0, 1]$ as the cdf of the standard normal distribution. For any $a \in \RR$, we have $T'(n (\log_2(n) +a \sqrt{\log_2(n)})/2) \pconverge 2 \Phi(-a)$ in probability as $n \to \infty$. 
 \end{thm}
 
-\begin{prop}
-	Theorem~\ref{main-theorem-old} and Theorem~\ref{main-theorem-continuous} are equivalent. 
-\end{prop}
-\begin{proof}
-	TODO
-\end{proof}
-
-This completes the discussion about the motivating problem. In the sequel, we generalize the Markov chain to allow our averages to be of random (but bounded) size.  
+It turns out that the approximation is robust enough to have Theorem~\ref{main-theorem-continuous} imply Theorem~\ref{main-theorem-old}. We will prove this in the more general setting of Theorem~\ref{main-theorem-discrete}. This completes the discussion about the motivating problem. In the sequel, we generalize the Markov chain to allow our averages to be of random (but bounded) size.  
 
 \section{Random Bounded Averages}
 
@@ -131,13 +143,13 @@ Let $S_m$ and $S_m'$ be the corresponding $L^2$ distances from the mean.
 		\Sigma_2 & := \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1-m}{m} \sum_{j = 1}^m x_{k, i_j}^2 \\
 		\Sigma_3 & = \binom{n}{m}^{-1} \sum_{i_1 < \ldots < i_m} \frac{1}{m} \sum_{1 \leq u < v \leq m} 2x_{k, i_u} x_{k, i_v}.
 	\end{align*}
-	For the first sum, we immediately get $S_1 = S_m(k)$. For the second sum, we get 
+	For the first sum, we immediately get $\Sigma_1 = S_m(k)$. For the second sum, we get 
 	\begin{align*}
-		S_2 & = \binom{n}{m}^{-1} \cdot \frac{1-m}{m} \cdot \binom{n-1}{m-1} S_m(k) = \frac{1-m}{n} S_m(k). 
+		\Sigma_2 & = \binom{n}{m}^{-1} \cdot \frac{1-m}{m} \cdot \binom{n-1}{m-1} S_m(k) = \frac{1-m}{n} S_m(k). 
 	\end{align*}
 	For the last sum, we get 
 	\[
-		S_3 = \binom{n}{m}^{-1} \cdot \frac{1}{m} \cdot \binom{n-2}{m-2} \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = \frac{1-m}{n(n-1)} S_m(k)
+		\Sigma_3 = \binom{n}{m}^{-1} \cdot \frac{1}{m} \cdot \binom{n-2}{m-2} \sum_{1 \leq u < v \leq n} 2x_{k, u} x_{k, v} = \frac{1-m}{n(n-1)} S_m(k)
 	\]
 	where we used the fact that 
 	\[
@@ -186,16 +198,16 @@ Proposition~\ref{explicit-formula-1} and Corollary~\ref{explicit-formula-2} will
 \begin{cor} \label{explicit-formula-continuous-YESYES}
 	Let $S(t)$ be the $L^2$ distance at time $t$ of $\msP_Q$. Then 
 	\[
-		\EE \left [ S^*(t) | \mcF_s \right ] = \exp \left ( - \frac{(t-s)(\mu - 1)}{n-1} \right ) S^*(s).
+		\EE \left [ S(t) | \mcF_s \right ] = \exp \left ( - \frac{(t-s)(\mu - 1)}{n-1} \right ) S(s).
 	\]
 \end{cor}
 
 \begin{proof}
 	The proof is very similar to the proof of Corollary~\ref{explicit-formula-2} now that we have Proposition~\ref{explicit-formula-discrete-YESYES}. We can compute 
 	\begin{align*}
-		\EE \left [S^*(t) | \mcF_s \right ] & = \sum_{k = 0}^\infty \Pr[k \text{ rings}] \cdot \EE \left [ S^*(t) | \mcF_s \text{ and } k \text{ rings} \right ] \\
-		& = \sum_{k = 0}^\infty \frac{(t-s)^k}{k!} \exp (-(t-s)) \cdot \left ( 1 - \frac{\mu - 1}{n-1} \right )^k S^*(s) \\
-		& = \exp \left ( - \frac{(t-s) (\mu - 1)}{n-1} \right ) S^*(s). 
+		\EE \left [S(t) | \mcF_s \right ] & = \sum_{k = 0}^\infty \Pr[k \text{ rings}] \cdot \EE \left [ S(t) | \mcF_s \text{ and } k \text{ rings} \right ] \\
+		& = \sum_{k = 0}^\infty \frac{(t-s)^k}{k!} \exp (-(t-s)) \cdot \left ( 1 - \frac{\mu - 1}{n-1} \right )^k S(s) \\
+		& = \exp \left ( - \frac{(t-s) (\mu - 1)}{n-1} \right ) S(s). 
 	\end{align*}
 \end{proof}
 
@@ -218,7 +230,7 @@ We recall the definition of our original process for the random bounded averages
 We now describe how we couple the processes $\msP$, $\FRAG$, and $\BRANCH$ so that $\FRAG$ acts as an approximation of $\msP$, and $\BRANCH$ is an approximation of $\FRAG$ where our approximations are fine enough to conclude information about the $L^1$ convergence. 
 
 \begin{quote}
-	We couple $\msP$ and $\FRAG$ in the obvious way: whenever we average some piles on $\msP$, we average the same exact piles in $\FRAG$ while keeping the removal rules consistent. The coupling between $\FRAG$ and $\BRANCH$ is a bit more complicated. In order to couple the two processes, we attach to each interval set $I_t$ a labelling function $\pi_t : I_t \to [n] \cup \{0\}$ which assigns labels to intervals. The labelling function will always be injective on the intervals which are not given the label $0$. If $I \in I_t$ satisfies $\pi_t(I) = k$ for some $k \in [n]$, the interval $I$ ``represents'' the interval $k$ and will satisfy $|I| = \overline{x}_{t, k}$. The coupling between $\FRAG$ and $\BRANCH$ will also describe how the labelling function $\pi_t$ evolves. At time $t$, let $A_t := \{i \in [n] : \overline{x}_{t, i} > 0\}$ be the labels of the piles which are non-zero. For each interval $I \in I_t$ and subset $S \subseteq [n]$ of $k-1$ elements, where $k$ ranges from $2$ to $N$, we can define an independent Poisson clock $N_{I, S}$ of rate $q_k \binom{n}{k}^{-1}$ which dictates $I$ to split into $k$ equal parts. Then to the interval $I$, we can attach the Poisson clock
+	(\textbf{The Coupling}) We couple $\msP$ and $\FRAG$ in the obvious way: whenever we average some piles on $\msP$, we average the same exact piles in $\FRAG$ while keeping the removal rules consistent. The coupling between $\FRAG$ and $\BRANCH$ is a bit more complicated. In order to couple the two processes, we attach to each interval set $I_t$ a labelling function $\pi_t : I_t \to [n] \cup \{0\}$ which assigns labels to intervals. The labelling function will always be injective on the intervals which are not given the label $0$. If $I \in I_t$ satisfies $\pi_t(I) = k$ for some $k \in [n]$, the interval $I$ ``represents'' the interval $k$ and will satisfy $|I| = \overline{x}_{t, k}$. The coupling between $\FRAG$ and $\BRANCH$ will also describe how the labelling function $\pi_t$ evolves. At time $t$, let $A_t := \{i \in [n] : \overline{x}_{t, i} > 0\}$ be the labels of the piles which are non-zero. For each interval $I \in I_t$ and subset $S \subseteq [n]$ of $k-1$ elements, where $k$ ranges from $2$ to $N$, we can define an independent Poisson clock $N_{I, S}$ of rate $q_k \binom{n}{k}^{-1}$ which dictates $I$ to split into $k$ equal parts. Then to the interval $I$, we can attach the Poisson clock
 	\[
 		N_I = \begin{cases}
 			\sum_{k = 2}^N \sum_{S \in \binom{[n]}{k-1} : \pi_t(I) \cap S = \emptyset} N_{I, S} & \text{ when $\pi_t(I) \neq 0$} \\
@@ -265,7 +277,7 @@ In this section, we analyze the distribution of $|I_t^x|$ for any fixed $x \in [
 	\begin{align*}
 		\frac{X_t - t}{\sqrt{t}} & = \frac{\sum_{i = 1}^{[t]} Y_i + Z_t-t}{\sqrt{t}} = \frac{\sqrt{[t]}}{\sqrt{t}} \cdot \frac{\sum_{i = 1}^{[t]} Y_i - [t]}{\sqrt{[t]}} + \frac{Z_t - \{t\}}{\sqrt{t}}.
 	\end{align*}
-	Since $(Z_t - \{t\})/\sqrt{t} \to 0$ almost surely, the Lemma follows from the central limit theorem. 
+	Since $(Z_t - \{t\})/\sqrt{t} \to 0$ in probability, the Lemma follows from the Central Limit Theorem. 
 \end{proof}
 
 Lemma~\ref{poisson-concentration} will allow us to show that with high probability, $|I_t^x|$ lies in the interval $(a_n, b_n)$.
@@ -320,7 +332,7 @@ We now have all the tools needed to prove Theorem~\ref{main-theorem}.
 	\[
 		\sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \to 1
 	\]
-	almost surely. 
+	in probability. 
 \end{prop}
 
 \begin{proof}
@@ -341,7 +353,7 @@ We now have all the tools needed to prove Theorem~\ref{main-theorem}.
 
 Moreover, by time $t$, the piles which satisfy $\overline{x}_{t, i} \in (a_n, b_n)$ correspond to intervals whose lengths are in the same range. For the rest of the paper, our goal will be to prove Theorem~\ref{main-theorem}. The first step in this journey will be to prove Lemma~\ref{first-approximation} which says that at time $t$ the processes $\msP$ and $\FRAG$ are close in $L^1$. 
 \begin{lem} \label{first-approximation}
-	$\norm{x_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ almost surely. 
+	$\norm{x_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ in probability. 
 \end{lem}
 
 \begin{proof}
@@ -377,7 +389,7 @@ Moreover, by time $t$, the piles which satisfy $\overline{x}_{t, i} \in (a_n, b_
 	\[
 		\EE [D_t] \leq \frac{C \gamma n \log n}{a_n n^2} = O \left ( \frac{\log n}{a_n n} \right ) = O \left ( \log n \cdot n^{- \frac{1}{2}(\log n)^{-1/4}} \right ) = o(1). 
 	\]
-	Thus $D_t \to 0$ almost surely and $\norm{x_t - \overline{x_t}} = D_t + o(1) \to 0$ almost surely. This proves that the mass thrown out because of (R2) will be $o(1)$ almost surely. Finally, we consider the mass removed because of (R3). Note that this removal happens because there is some $I \in I_t$ with $s_1 = \pi_t(I)$ and $s_2, \ldots, s_k \in [n]$ such that at least one of the piles associated to $s_2, \ldots, s_k$ is positive and $N_{I, s_2, \ldots, s_k}$ rings but the $\overline{N}_{s_1, \ldots, s_k}$ does not. Note that the rate that this happens is the exact same as the rate that $\overline{N}_{s_1, \ldots, s_k}$ rings. There are at most $N$ clocks associated to a single $\overline{N}_{s_1, \ldots, s_k}$, so in the worst case if we want to bound the mass we remove, we can think of this amount being dominated by the amount we remove in (R2) if averagings were to happen $N+1$ times faster. This amount of mass removed is still $o(1)$ almost surely, which suffices for the proof. 
+	Thus $D_t \to 0$ in probability and $\norm{x_t - \overline{x_t}} = D_t + o(1) \to 0$ in probability. This proves that the mass thrown out because of (R2) will be $o(1)$ in probability. Finally, we consider the mass removed because of (R3). Note that this removal happens because there is some $I \in I_t$ with $s_1 = \pi_t(I)$ and $s_2, \ldots, s_k \in [n]$ such that at least one of the piles associated to $s_2, \ldots, s_k$ is positive and $N_{I, s_2, \ldots, s_k}$ rings but the $\overline{N}_{s_1, \ldots, s_k}$ does not. Note that the rate that this happens is the exact same as the rate that $\overline{N}_{s_1, \ldots, s_k}$ rings. There are at most $N$ clocks associated to a single $\overline{N}_{s_1, \ldots, s_k}$, so in the worst case if we want to bound the mass we remove, we can think of this amount being dominated by the amount we remove in (R2) if averagings were to happen $N+1$ times faster. This amount of mass removed is still $o(1)$, which suffices for the proof. 
 \end{proof}
 
 We now prove Lemma~\ref{frag-branch-close} which states the total mass in piles of size in $(a_n, b_n)$ is well-approximated by the total length of intervals of similar length. 
@@ -386,14 +398,14 @@ We now prove Lemma~\ref{frag-branch-close} which states the total mass in piles 
 	\[
 		\left | \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} - \sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \right | \to 0. 
 	\]
-	almost surely. 
+	in probability. 
 \end{lem}	
 \begin{proof}
 	From our coupling, it is clear that all piles satisfying $\overline{x}_{t, i} \neq 0$ is associated with a unique interval in $I_t$ at time $t$. Moreover, this associated interval has length equal to the mass in the pile. This proves that 
 	\[
 		\sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} \leq \sum_{I \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)}.
 	\] 
-	The only reason why the right sum is possibly larger than the left is because of the intervals $I \in I_t$ whose length lies in $|I| \in (a_n, b_n)$ but there is no pile associated to it. Since $|I| > a_n$, this implies that it must have lost its associated label via multiple positive piles being averaged together. Thus the length in $|I|$ is included in the mass we throw out in $\FRAG$. But this mass is $o(1)$ almost surely from Lemma~\ref{first-approximation}. This proves the other bound
+	The only reason why the right sum is possibly larger than the left is because of the intervals $I \in I_t$ whose length lies in $|I| \in (a_n, b_n)$ but there is no pile associated to it. Since $|I| > a_n$, this implies that it must have lost its associated label via multiple positive piles being averaged together. Thus the length in $|I|$ is included in the mass we throw out in $\FRAG$. But this mass is $o(1)$ in probability from Lemma~\ref{first-approximation}. This proves the other bound
 	\[
 		\sum_{t \in I_t} |I| \cdot \1_{|I| \in (a_n, b_n)} \leq \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{\overline{x}_{t, i} \in (a_n, b_n)} + o(1) 
 	\]
@@ -403,7 +415,7 @@ We now prove Lemma~\ref{frag-branch-close} which states the total mass in piles 
 We currently have enough to prove one side of Theorem~\ref{main-theorem}.
 
 \begin{prop}
-	$T(t) \to 2$ almost surely as $n \to \infty$. 
+	$T(t) \to 2$ in probability as $n \to \infty$. 
 \end{prop}
 \begin{proof}
 	We can bound
@@ -414,9 +426,9 @@ We currently have enough to prove one side of Theorem~\ref{main-theorem}.
 	\begin{align*}
 		2 \sum_{i = 1}^n \left ( \overline{x}_{t, i} - \frac{1}{n} \right )^+ & \geq 2 \sum_{i = 1}^n \overline{x}_{t, i} \cdot \1_{x_{t, i} \in (a_n, b_n)} - \frac{2}{n} | \{ i \in [n] : \overline{x_{t, i}} > 0\} \\
 		& \geq 2 \sum_{I \in I_t}^n |I| \cdot \1_{|I| \in (a_n, b_n)} - \frac{2}{n a_n} + o(1) \\
-		& \geq 2 - o(1).
+		& \geq 2 \sum_{I \in I_t}^n |I| \cdot \1_{|I| \in (a_n, b_n)} - o(1). 
 	\end{align*}
-	This proves the proposition. 
+	The first term converges to $2$ in probability, which completes the proof of the proposition. 
 \end{proof}
 
 To prove the other side of Theorem~\ref{main-theorem}, we want to run our original process starting from a ``smoothed'' version of the point $\overline{x}_t$. The $L^2$ bound on this new process will be more effective than if we were to use it on the original process. 
@@ -429,24 +441,23 @@ To prove the other side of Theorem~\ref{main-theorem}, we want to run our origin
 \end{defn}
 
 \begin{lem}
-	$\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ almost surely. 
+	$\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as $n \to \infty$ in probability. 
 \end{lem}
 \begin{proof}
 	Whenever $\overline{x}_{t, i} \in (a_n, b_n)$, we have the bound
 	\[
 		|\overline{x}_{t, i} - \widehat{x}_{t, i}| = \frac{1 - z}{n}
 	\]
-	where $z := \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \to 1$ almost surely as $n \to \infty$. When $\overline{x}_{t, i} \not\in (a_n, b_n)$, then we can bound
+	where $z := \sum_{i : \overline{x}_{t, i} \in (a_n, b_n)} \overline{x}_{t, i} \to 1$ in probability. When $\overline{x}_{t, i} \not\in (a_n, b_n)$, then we can bound
 	\[
 		| \overline{x}_{t,i} - \widehat{x}_{t, i}| \leq \overline{x}_{t, i} + \frac{1-z}{n}.
 	\]
 	Adding these estimates together, we have that
 	\begin{align*}
 		\norm{\widehat{x}_t - \overline{x}_t}_1 & \leq n \cdot \frac{1-z}{n} + \sum_{i : \overline{x}_{t, i} \not\in (a_n, b_n)} \overline{x}_{t, i} \\
-		& \leq (1-z) + (1 - z) \\
-		& = 2(1-z).
+		& \leq (1-z) + (1 - z) = 2(1-z).
 	\end{align*}
-	As $n \to \infty$, we have $z \to 1$ almost surely. Hence, $\norm{\widehat{x}_t - \overline{x}_t}_1 \to 0$ as desired. 
+	Since $1-z \to 0$ in probability, we get the desired result.
 \end{proof}
 \begin{lem}
 	$\norm{\widehat{x}_t - \frac{1}{n} \cdot \1}_2^2 \leq \frac{2b_n^2}{a_n}$ for sufficiently large $n$ where $\1$ is the uniform vector of $1$'s.
@@ -479,21 +490,21 @@ To prove the other side of Theorem~\ref{main-theorem}, we want to run our origin
 Now let $\Omega = \max \left \{\gamma, \frac{7}{2(\mu -1)} \right \} + 1$ be a universal constant. We define $s := \Omega (n-1) (\log n)^{3/4}$. Then, we have the following lemma. 
 
 \begin{lem}
-	$T(s+t) \to 0$ as $n \to \infty$ almost surely. 
+	$T(s+t) \to 0$ as $n \to \infty$ in probability. 
 \end{lem}
 
 \begin{proof}
 	Let $T', S'$ be the $L^1$ and $L^2$ distances of the process $\widehat{x}$. From Lemma~\ref{explicit-formula-continuous-YESYES}, we have that
 	\begin{align*}
-		S'(t+s) & = \exp \left ( - \frac{s (\mu-1)}{(n-1)} \right ) S'(t) \\
+		\EE [ S'(t+s) | \mcF_t' ] & = \exp \left ( - \frac{s (\mu-1)}{(n-1)} \right ) S'(t) \\
 		& \leq \exp(- \Omega (\mu-1) (\log n)^{3/4}) \cdot \frac{2b_n^2}{a_n} \\
 		& = 2 \exp \left ( \left \{ \frac{7}{2} - \Omega (\mu - 1) \right \} (\log n)^{3/4} \right ) \cdot \frac{1}{n}.
 	\end{align*}
 	From the Cauchy-Schwartz inequality, we have that
 	\[
-		(T'(t+s))^2 \leq n S'(t+s) \leq 2 \exp \left ( \left \{ \frac{7}{2} - \Omega (\mu - 1) \right \} (\log n)^{3/4} \right ) = o(1).
+		\EE [(T'(t+s))^2] \leq \EE [n S'(t+s)] \leq 2 \exp \left ( \left \{ \frac{7}{2} - \Omega (\mu - 1) \right \} (\log n)^{3/4} \right ) = o(1).
 	\]
-	This gives us $\norm{\widehat{x}_{t+s} - \frac{1}{n} \cdot \1}_1 = o(1)$. From the triangle inequality, we have
+	From Jensen's inequality, we have $\EE[T'(t+s)] \leq \{ \EE[T'(t+s)^2] \}^{1/2}$. This gives us $\norm{\widehat{x}_{t+s} - \frac{1}{n} \cdot \1}_1 = o(1)$ in probability. From the triangle inequality, we have
 	\begin{align*}
 		\norm{x_{t+s} - \frac{1}{n} \cdot \1}_1 & \leq \norm{x_{t+s} - \widehat{x}_{t+s}}_1 + \norm{\widehat{x}_{t+s} - \frac{1}{n} \cdot \1}_1 \\
 		& \leq \norm{x_t - \widehat{x}_t} + o(1) \\
@@ -505,15 +516,15 @@ Now let $\Omega = \max \left \{\gamma, \frac{7}{2(\mu -1)} \right \} + 1$ be a u
 
 Note that for sufficiently large $n$, we have 
 \[
-	s + t \leq \gamma n \left (\log n + (\Omega - \gamma) (\log n)^{3/4} \right ).
+	s + t \leq \gamma n \left (\log n + (\Omega - \gamma) (\log n)^{3/4} \right ) \leq \gamma n ( \log n + (\log n)^{4/5}).
 \]
 Thus, we can slightly weaken our current results to get a succint formulation in Theorem~\ref{main-theorem}. 
 
 \begin{thm} \label{main-theorem}
 	Let $t = \theta n \log n$ for some $\theta > 0$. Then, the following are true:
 	\begin{enumerate}[label = (\alph*)]
-		\item If $\theta < \gamma$, then $T(t) \to 2$ almost surely. 
-		\item If $\theta > \gamma$, then $T(t) \to 0$ almost surely. 
+		\item If $\theta < \gamma$, then $T(t) \to 2$ in probability. 
+		\item If $\theta > \gamma$, then $T(t) \to 0$ in probability. 
 	\end{enumerate}
 \end{thm}
 
@@ -521,9 +532,72 @@ Thus, we can slightly weaken our current results to get a succint formulation in
 	Both results follow from Theorem~\ref{main-theorem} and the monotonicity of $T$ and $S$
 \end{proof}
 
-In particular, we have proven that $\gamma n \log n$ is a cutoff time for the $L^1$ distance where $\gamma = 1/\EE[Q \log Q]$.
+In particular, we have proven that $\gamma n \log n$ is a cutoff time for the $L^1$ distance where $\gamma = 1/\EE[Q \log Q]$. We can extend these results easily to the discrete case. We will redefine the processes so that $\{x_t\}_{t \in \NN_0}$ is the discrete time process where $x_{k+1}$ is obtained from $x_k$ by sampling a number of $Q$, then averaging a randomly chosen set of coordinates of that size. The process $\{x_t'\}$ will then be the Poissonized version where averages happening according to a Poisson clock of rate $1$. Then Theorem~\ref{main-theorem} holds for the discrete process. 
 
-\section{Future Work} 
+\begin{thm} \label{main-theorem-discrete}
+	Let $t = \theta n \log n$ for some $\theta > 0$. Let $T$ be the $L^1$ distance of the discrete process. Then the following are true:
+	\begin{enumerate}[label = (\alph*)]
+		\item If $\theta < \gamma$, then $T(t) \to 2$ in probability. 
+		\item If $\theta > \gamma$, then $T(t) \to 0$ in probability. 
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	The key idea is that we want to relate the discrete process with the Poissonized version. Luckily, the Poissonized version can be interpreted in terms of the discrete version in the following natural way: Let $N$ be a Poisson random variable of rate $t$, then $x_N$ has the same distribution as $x_t'$.  
+	\begin{enumerate}[label = (\alph*)]
+		\item Let $t := \gamma n (\log n - (\log n)^{3/4})$ and $m := t - \sqrt{t} \log t$. We can lower bound $m$ by
+		\[
+			m \geq \gamma n (\log n - (\log n)^{3/4}) - 2n^{3/4} \log n \geq \gamma n (\log n - 2 (\log n)^{3/4}).
+		\]
+		In particular, if $\theta < \gamma$, we have $m \geq \theta n \log n$ for sufficiently large $n$. Let $N$ be a Poisson random variable of rate $t$. We can then bound
+		\begin{align*}
+			\Pr \left [ \norm{x_m - \frac{1}{n} \cdot \1}_1 < 2 - \varepsilon \right ] & \leq \Pr \left [ N < m \right ] + \Pr \left [ \norm{x_m - \frac{1}{n} \cdot \1}_1 < 2 - \varepsilon, N \geq m \right ] \\
+			& \leq \Pr[N < m] + \Pr \left [ \norm{x_N - \frac{1}{n} \cdot \1}_1 < 2 - \varepsilon \right ] \\
+			& \leq \Pr[N < m] + \Pr \left [ \norm{x_t' - \frac{1}{n} \cdot \1}_1 < 2 - \varepsilon \right ]
+		\end{align*}
+		From the more exact versions of the thresholds in Theorem~\ref{main-theorem}, we have that 
+		\[
+			\Pr \left [ \norm{x_t' - \frac{1}{n} \cdot \1}_1 < 2 - \varepsilon \right ] \to 0
+		\]
+		as $n \to \infty$. Moreover, we have that 
+		\[
+			\Pr[N < m] = \Pr \left [ \frac{N-t}{\sqrt{t}} < \frac{m-t}{\sqrt{t}} \right ] = \Pr \left [ \frac{N-t}{\sqrt{t}} < - \log t \right ].
+		\]
+		From Lemma~\ref{poisson-concentration}, we have that
+		\[
+			\Pr[N < m] \to \Pr[N(0, 1) < -\infty] = 0.
+		\]
+		This proves the desired result by monotonicity.
+
+
+		\item The proof is very similar to the previous part, but we include it for the sake of completeness. Let $t := \gamma n (\log n + (\log n)^{4/5})$ and $m := t + \sqrt{t} \log t$. One crude bound for $m$ for sufficiently large $n$ is
+		\[
+			m \leq \gamma n ( \log n + (\log n)^{4/5}) + 2n^{3/4} \log n \leq \gamma n (\log n + 2(\log n)^{4/5} )
+		\]
+		where to bound $\sqrt{t}$ we used $t \ll n^{3/2}$ and to bound $\log t$ we used $t \ll n^2$. In particular, if $\theta > \gamma$, then $\theta n \log n \geq m$ for sufficiently large $n$. Let $N$ be a Poisson random variable of rate $t$. We can then bound
+		\begin{align*}
+			\Pr \left [ \norm{x_m - \frac{1}{n} \cdot \1}_1 > \varepsilon \right ] & \leq \Pr \left [ N > m \right ] + \Pr \left [ \norm{x_m - \frac{1}{n} \cdot \1}_1 > \varepsilon, N \leq m \right ] \\
+			& \leq \Pr [N > m] + \Pr \left [ \norm{x_N - \frac{1}{n} \cdot \1}_1 > \varepsilon \right ] \\
+			& \leq \Pr [N > m] + \Pr \left [ \norm{x_t' - \frac{1}{n} \cdot \1}_1 > \varepsilon \right].
+		\end{align*}
+		where we used the monotonicity of the $L^1$ norm in the second inequality. From the more exact versions of the thresholds of Theorem~\ref{main-theorem}, we have that 
+		\[
+			\Pr \left [ \norm {x_t' - \frac{1}{n} \cdot \1}_1 > \varepsilon \right ] \to 0
+		\]
+		as $n \to \infty$. Moreover, we have that 
+		\[
+			\Pr [N > m] = \Pr \left [ \frac{N - t}{\sqrt{t}} > \frac{m - t}{\sqrt{t}} \right ] = \Pr \left [ \frac{N-t}{\sqrt{t}} > \log t \right ].
+		\]
+		From Lemma~\ref{poisson-concentration}, we have that 
+		\[
+			\Pr [N > m] \to \Pr[N(0, 1) > \infty] = 0
+		\]
+		as $n \to \infty$. This proves that $T(m) \to 0$ in probability. From monotonicity, the result follows.
+	\end{enumerate}
+	This suffices for the proof. 
+\end{proof}
+
+\section{Future Work and Open Questions} 
 
 There are still many open questions about the iterated averages Markov chain. 
 
