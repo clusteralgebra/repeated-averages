@@ -10,4 +10,5 @@
 \contentsline {subsection}{\numberline {3.3}Second Order Behavior of Random Averages}{17}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}Stationary Distribution of Normalized Markov Chain}{17}{subsection.3.4}%
 \contentsline {section}{Acknowledgements}{17}{section*.2}%
-\contentsline {section}{References}{18}{section*.3}%
+\contentsline {section}{Honor Code}{17}{section*.3}%
+\contentsline {section}{References}{17}{section*.3}%
